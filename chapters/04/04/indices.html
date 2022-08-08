@@ -1,0 +1,714 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>4.4 Trabalhando com índices &#8212; Engenharia de Analytics</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="4.5 Modelagem de Banco de Dados" href="../05/modelagem_bd.html" />
+    <link rel="prev" title="4.3 Modelo Relacional" href="../03/modelo_relacional.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Engenharia de Analytics</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Bem-vindo ao Livro Engenharia de Analytics
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Fundamentos
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../01/intro.html">
+   Capítulo 1 - Introdução
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/01/por_que_analytics.html">
+     1.1 Por quê Engenharia de Analytics?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/02/carreiras_atuais.html">
+     1.2 Redefinindo equipes de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/03/responsabilidades.html">
+     1.3 As responsabilidades do Engenheiro de Analytics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/04/northwind.html">
+     1.4 Estudo de caso: Northwind Traders
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/05/para_quem.html">
+     1.5 Para que é este livro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/06/como_organizado.html">
+     1.6 Como este livro está organizado
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../02/intro.html">
+   Capítulo 2 - Fundamentos de Analytics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/01/5_vs.html">
+     2.1 Os 5 Vs do big data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/02/volume.html">
+     2.2 Volume
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/03/velocidade.html">
+     2.3 Velocidade
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/04/variedade.html">
+     2.4 Variedade
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/05/veracidade.html">
+     2.5 Veracidade
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/06/valor.html">
+     2.6 Valor
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../03/intro.html">
+   Capítulo 3 - Pensando de forma analítica
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/01/pensamento_analitico.html">
+     3.1 O pensamento analítico
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/02/tecnicas_problemas.html">
+     3.2 Técnicas para resolução de problemas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/03/pareto.html">
+     Diagrama de Pareto
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/04/5_porques.html">
+     Os 5 porquês
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../intro.html">
+   Capítulo 4 - Bancos de dados
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/tipos_de_bd.html">
+     4.1 Tipos de Bancos de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tipos_de_dados.html">
+     4.2 Tipos de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/modelo_relacional.html">
+     4.3 Modelo Relacional
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     4.4 Trabalhando com índices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/modelagem_bd.html">
+     4.5 Modelagem de Banco de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/planilhas_bd.html">
+     Planilhas vs Bancos de Dados SQL: Quais as diferenças?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../05/intro.html">
+   Capítulo 5 - SQL para Análise de Dados
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/01/select.html">
+     5.1 Consultando dados com SELECT, WHERE e ORDER BY
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/02/join.html">
+     5.2 Juntando dados com JOIN e UNION
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/03/agregadas.html">
+     5.3 Funções Agregadas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/04/group_by.html">
+     Trabalhando com agrupamentos GROUP BY
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/05/case_when.html">
+     5.5 Lógica condicional com  CASE WHEN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Modelando Dados
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../06/intro.html">
+   Capítulo 6 - Data Warehouses
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/01/papel_mas_dw.html">
+     6.1 O papel do Data Warehouse no Modern Analytics Stack
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/02/modelagem_dimensional.html">
+     6.2 O Modelo dimensional
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/03/esquema_estrela.html">
+     6.3 O esquema estrela
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/04/arquiteturas_dw.html">
+     6.4 Arquiteturas de Data Warehouse
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../07/intro.html">
+   Capítulo 7 - Tabelas Fato
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../07/01/medidas.html">
+     Tipos de Medidas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../07/02/tipos_fato.html">
+     Tipos de Tabelas Fato
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../07/leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../08/intro.html">
+   Capítulo 8 - Dimensões
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/01/chaves.html">
+     7.1 Tipo de Chaves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/02/scd.html">
+     7.2 Dimensão de Alteração Lenta  (SCD)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/03/degeneradas.html">
+     7.3 Dimensões degeneradas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/04/junk.html">
+     7.4 Dimensões Junk
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../09/intro.html">
+   Capítulo 9 -  Modelando um Data Warehouse
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/dpavancini/eng-de-analytics-livro"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/dpavancini/eng-de-analytics-livro/issues/new?title=Issue%20on%20page%20%2Fchapters/04/04/indices.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/chapters/04/04/indices.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>4.4 Trabalhando com índices</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="trabalhando-com-indices">
+<h1>4.4 Trabalhando com índices<a class="headerlink" href="#trabalhando-com-indices" title="Permalink to this headline">#</a></h1>
+<p>Para melhorar o desempenho das consultas, os bancos de dados geralmente possuem uma estrutura de dados adicional chamada de índice. Os índices existem para evitar escanear toda uma tabela sempre que um registro precisar ser consultado e podem ser criados a partir de uma ou mais colunas de uma tabela. Como analytics engineer você vai cedo ou tarde passar por índices na hora de consultar dados de uma tabela ou para melhorar o desempenho de uma consulta que está demorando mais que o desejado.</p>
+<p>Para entender melhor porque os índices são necessários é interessante detalhar um pouco melhor como os bancos de dados armazenam os dados de fato no disco do computador (o HD). Na figura 4.1 vimos que os SGBDs separam a camada de armazenamento da camada de consulta. Sempre que uma consulta é enviada para o motor do banco de dados, ele precisa realizar uma série de operações para encontrar onde esses dados estão de fato guardados na memória ou disco do computador e retornar esses dados para o usuário ou aplicação que fez a requisição. Como bancos de dados precisam armazenar grandes volumes de dados, geralmente não é possível utilizar um único arquivo como é feito em uma planilha eletrônica. Na verdade, as tabelas de um banco de dados são divididas em páginas (ou blocos), a unidade mínima que o banco de dados consegue ler e escrever para um arquivo em disco e que armazenam apenas uma parte das linhas e colunas da tabela, além de algumas estatísticas como o valor máximo e mínimo que vão facilitar a consulta futuramente. Agora, vamos supor que você queira consultar um pedido de uma tabela no banco de dados do ERP da sua empresa. Como o banco de dados não tem como saber de antemão onde esse pedido está entre as milhões de linhas da tabela de vendas, ele vai precisar escanear toda a tabela até encontrar esse pedido. Pior, ele precisa escanear cada página dessa tabela, gastando mais tempo de processador e de leitura de dados para ler cada página do disco em memória, procurar o pedido e retornar os dados processados.</p>
+<p>É claro que deveria existir alguma forma de otimizar esse processo de consulta, e para isso os bancos de dados utilizam uma estrutura chamada índice, que da mesma forma que um índice em um livro, dá atalhos para a localização de cada registro indexado no banco de dados. O processo de criação desse índice exige que uma nova estrutura de dados seja criada, mapeando cada valor do índice à sua localização física em disco (sua página). Por outro lado, como a leitura de dados utilizando índices é muito mais rápida, é comum que os bancos de dados utilizem índices para as chaves primárias ou outras colunas que são consultadas com frequência. A figura 4.3 apresenta uma simplificação de como esse processo ocorre em uma tabela e como a criação de um índice facilita a consulta pelo banco de dados.</p>
+<p>Figura 4.3. Consultas e índices em um banco relacional</p>
+<p>Embora os índices sejam essenciais para obter consultas rapidamente em bancos transacionais, seu uso é muito mais limitado para consultas analíticas. Isso ocorre porque a consulta analítica não se preocupa em obter os dados de um pedido específico ou um cliente específico, mas sim obter agregados sobre um grande número de linhas. A consulta analítica traz consigo algumas dificuldades para a estrutura de dados tradicional dos bancos de dados. A primeira dificuldade é que é comum utilizar colunas não indexadas para realizar filtros, juntar tabelas ou calcular agregados. O analista raramente sabe previamente todas as possíveis consultas que irá realizar e que poderiam ser otimizadas com a criação de índices ou outras estruturas.</p>
+<p>A segunda dificuldade é que os bancos de dados tradicionais armazenam os dados fisicamente nas páginas como linhas, o que facilita a consulta pelas chaves primárias indexadas das tabelas. No entanto, é raro que uma consulta analítica precise retornar muitas colunas de um único registro. Pelo contrário, o normal em consultas agregadas é realizar contagem ou somas de muitas linhas de uma ou poucas colunas de uma tabela por vez. Isso faz com que o banco de dados tenha que retornar um volume de dados do disco muito maior que o necessário para cada consulta, aumentando a necessidade de CPU e memória e muitas vezes impossibilitando o uso de bancos de dados tradicionais para projetos analíticos. Para contornar essa dificuldade, bancos de dados colunares foram desenvolvidos que armazenam as colunas de forma sequencial e utilizam de estruturas como os sort-maps para realizar operações rapidamente em volumes de dados que podem chegar a petabytes.</p>
+<p>Figura 4.4 Em bancos de dados tradicionais, os blocos armazenam linhas da tabela</p>
+<p>Figura 4.5 Bancos colunares armazenam colunas de forma sequencial</p>
+<p>Note que no banco de dados tradicional, cada página armazena os dados de uma linha. Para realizar uma contagem de nomes de clientes distintos, por exemplo, é necessário retornar todos os dados de cada página como CPF, cidade, etc que serão descartados. Por outro lado, no exemplo da figura 4.5 os dados de nome de clientes estão todos armazenados no mesmo bloco e podem ser consultados sem uso de memória adicional.</p>
+<p>Como vimos acima, bancos de dados possuem uma estrutura formal e regras pré-definidas para garantir que as entidades de negócio sejam representadas de forma fiel e consistente nos sistemas que fazem uso desses bancos. Deste modo, o desenvolvimento dos bancos de dados precisa seguir alguns processos e boas práticas que facilitem o seguimento dessas regras. Na próxima seção é apresentado um desses processos que é parte essencial da rotina do analytics engineer, a modelagem de dados.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters/04/04"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../03/modelo_relacional.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">4.3 Modelo Relacional</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../05/modelagem_bd.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">4.5 Modelagem de Banco de Dados</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Daniel Paulon Avancini<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
