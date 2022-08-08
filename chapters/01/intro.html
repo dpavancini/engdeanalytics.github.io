@@ -6,54 +6,54 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Arquiteturas de Data Warehouse &#8212; Engenharia de Analytics</title>
+    <title>Capítulo 1 - Introdução &#8212; Engenharia de Analytics</title>
     
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
-    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
-    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/clipboard.min.js"></script>
-    <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../../_static/design-tabs.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
-    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
-    <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Leia Mais" href="../leia_mais.html" />
-    <link rel="prev" title="O esquema estrela" href="../03/esquema_estrela.html" />
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.1 Por quê Engenharia de Analytics?" href="01/por_que_analytics.html" />
+    <link rel="prev" title="Bem-vindo ao Livro Engenharia de Analytics" href="../../intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -88,19 +88,19 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="bd-sidebar noprint" id="site-navigation">
     <div class="bd-sidebar__content">
         <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../../../index.html">
+    <a class="navbar-brand text-wrap" href="../../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
         
       
       
-      <img src="../../../_static/logo.png" class="logo" alt="logo">
+      <img src="../../_static/logo.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">Engenharia de Analytics</h1>
       
     </a>
-</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -108,46 +108,46 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../../../intro.html">
+                <a class="reference internal" href="../../intro.html">
                     Bem-vindo ao Livro Engenharia de Analytics
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../01/intro.html">
+ <li class="toctree-l1 current active has-children">
+  <a class="current reference internal" href="#">
    Capítulo 1 - Introdução
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../01/01/por_que_analytics.html">
+    <a class="reference internal" href="01/por_que_analytics.html">
      1.1 Por quê Engenharia de Analytics?
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../01/02/carreiras_atuais.html">
+    <a class="reference internal" href="02/carreiras_atuais.html">
      1.2 Redefinindo equipes de Dados
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../01/03/responsabilidades.html">
+    <a class="reference internal" href="03/responsabilidades.html">
      1.3 As responsabilidades do Engenheiro de Analytics
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../01/04/northwind.html">
+    <a class="reference internal" href="04/northwind.html">
      1.4 Estudo de caso: Northwind Traders
     </a>
    </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../02/intro.html">
+  <a class="reference internal" href="../02/intro.html">
    Capítulo 2 - Fundamentos de Analytics
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
@@ -157,59 +157,59 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../02/01/5_vs.html">
+    <a class="reference internal" href="../02/01/5_vs.html">
      Os 5 Vs do big data
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../02/02/volume.html">
+    <a class="reference internal" href="../02/02/volume.html">
      Volume
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../02/03/velocidade.html">
+    <a class="reference internal" href="../02/03/velocidade.html">
      Velocidade
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../02/04/variedade.html">
+    <a class="reference internal" href="../02/04/variedade.html">
      Variedade
     </a>
    </li>
   </ul>
  </li>
- <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="../intro.html">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../05/intro.html">
    Capítulo 5 - Data Warehouses
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
   <label for="toctree-checkbox-3">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul class="current">
+  <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../01/papel_mas_dw.html">
+    <a class="reference internal" href="../05/01/papel_mas_dw.html">
      O papel do Data Warehouse no Modern Analytics Stack
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../02/modelagem_dimensional.html">
+    <a class="reference internal" href="../05/02/modelagem_dimensional.html">
      O Modelo dimensional
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../03/esquema_estrela.html">
+    <a class="reference internal" href="../05/03/esquema_estrela.html">
      O esquema estrela
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/04/arquiteturas_dw.html">
      Arquiteturas de Data Warehouse
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../leia_mais.html">
+    <a class="reference internal" href="../05/leia_mais.html">
      Leia Mais
     </a>
    </li>
@@ -305,7 +305,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/dpavancini/eng-de-analytics-livro/issues/new?title=Issue%20on%20page%20%2Fchapters/05/04/arquiteturas_dw.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/dpavancini/eng-de-analytics-livro/issues/new?title=Issue%20on%20page%20%2Fchapters/01/intro.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -333,7 +333,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../../_sources/chapters/05/04/arquiteturas_dw.md"
+        <a href="../../_sources/chapters/01/intro.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -370,60 +370,23 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
-</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#abordagem-dimensional-de-kimball">
-   Abordagem dimensional de Kimball
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
     </div>
     <div class="article row">
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Arquiteturas de Data Warehouse</h1>
+                <h1>Capítulo 1 - Introdução</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#abordagem-dimensional-de-kimball">
-   Abordagem dimensional de Kimball
-  </a>
- </li>
-</ul>
-
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -431,18 +394,17 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="arquiteturas-de-data-warehouse">
-<h1>Arquiteturas de Data Warehouse<a class="headerlink" href="#arquiteturas-de-data-warehouse" title="Permalink to this headline">#</a></h1>
-<p>O conceito de criar data warehouses não é novo, e desde os anos 1990 algumas abordagens se tornaram comuns principalmente no ambiente corporativo. As duas abordagens mais comuns são associadas a dois nomes muito representativos no mundo de data warehouse e BI, Ralph Kimball e William (Bill) Inmon. Ambos são autores direta e indiretamente de dezenas de livros e abordagens utilizadas na criação de Data Warehouses mundo afora.  Os esquemas estrela também estão presentes nas diversas abordagens, assim como o uso de fatos e dimensões. A principal diferença entre eles é a recomendação de usar ou não a normalização além das estrelas, que veremos em seguida:</p>
-<section id="abordagem-dimensional-de-kimball">
-<h2>Abordagem dimensional de Kimball<a class="headerlink" href="#abordagem-dimensional-de-kimball" title="Permalink to this headline">#</a></h2>
-<p>Na proposta de Kimball, o data warehouse armazena somente dados desnormalizados em esquemas estrela. Um processo de ETL é responsável por retirar os dados das fontes de dados transacionais e construir os data marts de modo que as tabelas dimensão são padronizadas, ou conformadas, entre as diferentes estrelas. Nessa abordagem, um data mart é apenas uma divisão lógica de um único DW físico.</p>
-<p><img alt="Figura 6.3 O modelo dimensional de Kimball" src="engenharia-analytics-intro/cap6/screenshot_from_2022-02-20_18-08-06.png" />
-<strong>Figura 6.3 O modelo dimensional de Kimball</strong></p>
-<p>A criação das dimensões conformadas é parte essencial da modelagem dimensional de Kimball. Uma dimensão conformada é criada uma única vez no processo de ETL e serve como uma tabela mestre que é utilizada por diferentes tabelas fato, permitindo análises cruzadas e compatibilidade entre os diferentes processos. Essa estratégia também permite criar o data warehouse de forma incremental. Kimball propôs uma série de diagramas e matrizes para facilitar a criação das dimensões conformadas, como o da Figura 6.4,  que são chamados de arquitetura bus de data warehouse.</p>
-<p><img alt="Figura 6.4  A arquitetura bus. Fonte: Kimball Group" src="engenharia-analytics-intro/cap6/cap6-figura6-4.png" />
-<strong>Figura 6.4  A arquitetura bus. Fonte: Kimball Group</strong></p>
-</section>
+  <section class="tex2jax_ignore mathjax_ignore" id="capitulo-1-introducao">
+<h1>Capítulo 1 - Introdução<a class="headerlink" href="#capitulo-1-introducao" title="Permalink to this headline">#</a></h1>
+<p>Este livro apresenta as técnicas e os conceitos necessários para que um profissional de dados moderno domine um processo de analytics de ponta a ponta. Contrário ao que tradicionalmente encontramos nas organizações tradicionais, a nossa visão é a de que esse profissional deva vir das áreas de negócio, não de TI como de costume. Para isso, é preciso entender o processo de analytics do início ao fim, e não somente se concentrar na ponta final da visualização de dados e modelagem. Caso contrário, corremos o risco de construir estruturas complexas em cima de pilares extremamente frágeis, dificultando a geração de valor dos projetos de dados e aumentando o estresse e a rotatividade nas equipes de dados.</p>
+<p>Para essa nova profissão de dados deve-se combinar as capacidades analíticas, intimamente ligadas ao negócio da empresa, com um conhecimento mais geral sobre todo o processo de analytics, incluindo a capacidade de criar pipelines de dados utilizando boas práticas de engenharia de software, que raramente são aplicadas nas equipes de dados atuais.</p>
+<p>Para muitos leitores, termos como “pipeline de dados”, “infraestrutura de dados” e “processo de analytics” podem parecer muito distantes do seu dia a dia. Afinal, qual é a relação disso com os painéis e relatórios elaborados todo final do mês?</p>
+<p>Uma boa analogia, emprestada da visão de DataOps é o entendimento do processo de analytics como uma linha de montagem que se inicia com a obtenção dos dados (a matéria-prima), transforma esses dados através de diferentes etapas e ferramentas (a linha de montagem), para chegar aos produtos finais de dados, como relatórios, BIs e modelos (os produtos). Durante todo esse processo, testes automatizados são aplicados para garantir que os dados finais estejam nos padrões esperados.  Falhas em qualquer etapa do processo são monitoradas, ferramentas específicas e alertas são automatizados.</p>
+<p>Esse novo profissional vem sendo chamado de engenheiro(a) de analytics e é quem complementa e organiza as equipes de dados modernas.</p>
+<p>Mas por que essa profissão é necessária em primeiro lugar? Analistas, cientistas, engenheiros e engenheiras de dados já não fazem exatamente isso?</p>
+<p>É o que discutiremos na próxima seção.</p>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -458,7 +420,7 @@ title="Print to PDF"
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./chapters/05/04"
+            path: "./chapters/01"
         },
         predefinedOutput: true
     }
@@ -472,17 +434,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../03/esquema_estrela.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../../intro.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">O esquema estrela</p>
+            <p class="prev-next-title">Bem-vindo ao Livro Engenharia de Analytics</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../leia_mais.html" title="next page">
+    <a class='right-next' id="next-link" href="01/por_que_analytics.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Leia Mais</p>
+        <p class="prev-next-title">1.1 Por quê Engenharia de Analytics?</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -507,7 +469,7 @@ title="Print to PDF"
     </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
 
   </body>
