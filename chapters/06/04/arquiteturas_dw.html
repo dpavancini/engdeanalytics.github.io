@@ -286,8 +286,23 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../04/06/planilhas_bd.html">
-     Planilhas vs Bancos de Dados SQL: Quais as diferenças?
+    <a class="reference internal" href="../../04/06/normalizacao.html">
+     4.6 ER e Normalização de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/07/dimensional.html">
+     4.7 O modelo dimensional e o esquema estrela
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/08/outros_modelos.html">
+     4.8 Outras classificações de modelagem de bancos de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/09/planilhas_bd.html">
+     4.9 Planilhas vs Bancos de Dados SQL: Quais as diferenças?
     </a>
    </li>
    <li class="toctree-l2">
@@ -330,6 +345,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="../../05/05/case_when.html">
      5.5 Lógica condicional com  CASE WHEN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/06/sub.html">
+     Subqueries e CTE
     </a>
    </li>
    <li class="toctree-l2">
@@ -705,14 +725,14 @@ title="Print to PDF"
 <figure class="align-default" id="esquema-estrela">
 <img alt="../../../_images/modelo_dimensional.png" src="../../../_images/modelo_dimensional.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 8 </span><span class="caption-text">O modelo dimensional de Kimball</span><a class="headerlink" href="#esquema-estrela" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">O modelo dimensional de Kimball</span><a class="headerlink" href="#esquema-estrela" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>A criação das dimensões conformadas é parte essencial da modelagem dimensional de Kimball. Uma dimensão conformada é criada uma única vez no processo de ETL e serve como uma tabela mestre que é utilizada por diferentes tabelas fato, permitindo análises cruzadas e compatibilidade entre os diferentes processos. Essa estratégia também permite criar o data warehouse de forma incremental. Kimball propôs uma série de diagramas e matrizes para facilitar a criação das dimensões conformadas, como o da Figura 6.4,  que são chamados de arquitetura bus de data warehouse.</p>
 <figure class="align-default" id="arquitetura-bus">
 <img alt="../../../_images/arquitetura_bus.png" src="../../../_images/arquitetura_bus.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 9 </span><span class="caption-text">A arquitetura bus. Fonte: Kimball Group</span><a class="headerlink" href="#arquitetura-bus" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">A arquitetura bus. Fonte: Kimball Group</span><a class="headerlink" href="#arquitetura-bus" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -722,7 +742,7 @@ title="Print to PDF"
 <figure class="align-default" id="arquitetura-cif">
 <img alt="../../../_images/arquitetura_cif.png" src="../../../_images/arquitetura_cif.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 10 </span><span class="caption-text">A arquitetura de <em>Corporate Information Factory</em>.</span><a class="headerlink" href="#arquitetura-cif" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">A arquitetura de <em>Corporate Information Factory</em>.</span><a class="headerlink" href="#arquitetura-cif" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -732,7 +752,7 @@ title="Print to PDF"
 <figure class="align-default" id="marts-isolados">
 <img alt="../../../_images/arquitetura_marts_isolados.png" src="../../../_images/arquitetura_marts_isolados.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Data Marts Isolados.</span><a class="headerlink" href="#marts-isolados" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Data Marts Isolados.</span><a class="headerlink" href="#marts-isolados" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>

@@ -52,7 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Planilhas vs Bancos de Dados SQL: Quais as diferenças?" href="../06/planilhas_bd.html" />
+    <link rel="next" title="4.6 ER e Normalização de dados" href="../06/normalizacao.html" />
     <link rel="prev" title="4.4 Trabalhando com índices" href="../04/indices.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -286,8 +286,23 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../06/planilhas_bd.html">
-     Planilhas vs Bancos de Dados SQL: Quais as diferenças?
+    <a class="reference internal" href="../06/normalizacao.html">
+     4.6 ER e Normalização de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/dimensional.html">
+     4.7 O modelo dimensional e o esquema estrela
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/outros_modelos.html">
+     4.8 Outras classificações de modelagem de bancos de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/planilhas_bd.html">
+     4.9 Planilhas vs Bancos de Dados SQL: Quais as diferenças?
     </a>
    </li>
    <li class="toctree-l2">
@@ -330,6 +345,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="../../05/05/case_when.html">
      5.5 Lógica condicional com  CASE WHEN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/06/sub.html">
+     Subqueries e CTE
     </a>
    </li>
    <li class="toctree-l2">
@@ -631,15 +651,25 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="modelagem-de-banco-de-dados">
+  <section class="tex2jax_ignore mathjax_ignore" id="modelagem-de-banco-de-dados">
 <h1>4.5 Modelagem de Banco de Dados<a class="headerlink" href="#modelagem-de-banco-de-dados" title="Permalink to this headline">#</a></h1>
 <p>Na seção anterior mostramos como bancos de dados são estruturados para representar entidades (clientes, produtos, pedidos,etc). Entender como fazer essa representação, quais entidades devem ser modeladas, quais atributos, chaves etc. são parte da Arquitetura de um Banco de Dados. A criação dessa arquitetura é chamada de Modelagem de Dados.  Nesta seção apresentamos uma breve introdução de diferentes níveis de modelagem de dados que podem ser úteis para um engenheiro de analytics entender onde e como estão armazenados os dados que queremos analisar.  No capítulo 6, apresentamos como utilizar esses conceitos para modelar um Data Warehouse analítico, que é parte das atribuições do analytics engineer moderno.
 Segundo a definição mais recente disponível na Wikipedia, Os modelos de dados são ferramentas que permitem demonstrar como serão construídas as estruturas de dados que darão suporte aos processos de negócio, como esses dados estão organizados e quais os relacionamentos que pretendemos estabelecer entre eles.</p>
 <p>A forma dominante de visualização de bancos de dados é através dos modelos entidade-relacionamento (ER). No modelo ER, o processo de negócio é modelado como entidades que são ligadas entre si através de relacionamentos. Cada entidade pode ter vários atributos que a caracteriza, assim como os relacionamentos são geralmente definidos por sua cardinalidade (um para um, um para muitos, muitos para muitos). Os modelos ER são geralmente apresentados através de diagramas com diferentes níveis de complexidade.</p>
 <p>A figura 4.1 abaixo apresenta um exemplo de um diagrama entidade-relacionamento. As entidades são representadas como caixas e os relacionamentos com as linhas que conectam as caixas entre si. A cardinalidade é representada pelo chamado “pé-de-galinha” (do inglês, crow feet) presente em cada linha. A figura 4.6 detalha como a representação da entidade e seus atributos e os tipos de relacionamentos mais comuns encontrados nesses diagramas.</p>
 <p>Se você tiver background em negócios e não em desenvolvimento de bancos de dados, os modelos ER podem parecer muito distantes dos modelos de dados que são utilizados em planilhas eletrônicas para a criação dos relatórios e análises do dia-a-dia das empresas. E não é à toa; os bancos de dados criados a partir  de modelos ER têm geralmente função operacional e  não são otimizados para a análise de dados. O uso da técnica de normalização para evitar redundância dificulta ainda mais o trabalho do analista, fazendo com que não raramente um modelo ER tenha centenas de tabelas e relações e deixando mesmo consultas simples muito complicadas para quem não é especialista em bancos de dados.</p>
-<p>Figura 4.6. Exemplo de um diagrama de Entidade-Relacionamento (ERD)</p>
-<p>Figura 4.7. Exemplo de um diagrama de Entidade-Relacionamento (ERD)</p>
+<figure class="align-default" id="erd1">
+<img alt="../../../_images/erd1.png" src="../../../_images/erd1.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Exemplo de um diagrama de Entidade-Relacionamento (ERD)</span><a class="headerlink" href="#erd1" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="erd2">
+<img alt="../../../_images/erd_2.png" src="../../../_images/erd_2.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Exemplo de um diagrama de Entidade-Relacionamento (ERD)</span><a class="headerlink" href="#erd2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 
     <script type="text/x-thebe-config">
@@ -676,10 +706,10 @@ Segundo a definição mais recente disponível na Wikipedia, Os modelos de dados
             <p class="prev-next-title">4.4 Trabalhando com índices</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../06/planilhas_bd.html" title="next page">
+    <a class='right-next' id="next-link" href="../06/normalizacao.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Planilhas vs Bancos de Dados SQL: Quais as diferenças?</p>
+        <p class="prev-next-title">4.6 ER e Normalização de dados</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

@@ -52,6 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Leia Mais" href="../leia_mais.html" />
+    <link rel="prev" title="5.5 Lógica condicional com CASE WHEN" href="../05/case_when.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -116,7 +118,7 @@ const thebe_selector_output = ".output, .cell_output"
   Fundamentos
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../01/intro.html">
    Capítulo 1 - Introdução
@@ -284,8 +286,23 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../04/06/planilhas_bd.html">
-     Planilhas vs Bancos de Dados SQL: Quais as diferenças?
+    <a class="reference internal" href="../../04/06/normalizacao.html">
+     4.6 ER e Normalização de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/07/dimensional.html">
+     4.7 O modelo dimensional e o esquema estrela
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/08/outros_modelos.html">
+     4.8 Outras classificações de modelagem de bancos de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/09/planilhas_bd.html">
+     4.9 Planilhas vs Bancos de Dados SQL: Quais as diferenças?
     </a>
    </li>
    <li class="toctree-l2">
@@ -295,16 +312,16 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="../intro.html">
    Capítulo 5 - SQL para Análise de Dados
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
   <label for="toctree-checkbox-5">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="../01/select.html">
      5.1 Consultando dados com SELECT, WHERE e ORDER BY
@@ -328,6 +345,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="../05/case_when.html">
      5.5 Lógica condicional com  CASE WHEN
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Subqueries e CTE
     </a>
    </li>
    <li class="toctree-l2">
@@ -658,7 +680,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="subqueries-e-cte">
+  <section class="tex2jax_ignore mathjax_ignore" id="subqueries-e-cte">
 <h1>Subqueries e CTE<a class="headerlink" href="#subqueries-e-cte" title="Permalink to this headline">#</a></h1>
 <p>As subqueries (ou subconsultas) são instruções SELECT utilizadas dentro de outras consultas SELECT. Se inicialmente podem parecer confusas, entendê-las é essencial para criar análises complexas em SQL. Como implicado no seu nome, as subqueries contém uma ou mais consultas dentro de si mesmas.  Elas podem ser usadas dentro de diferentes predicados SQL como SELECT, FROM, WHERE ou HAVING e também podem retornar tanto um valor único como uma lista de valores.</p>
 <p>Para facilitar o entendimento, podemos separar as subqueries em diferentes consultas e considerar que as consultas internas são sempre executadas antes das externas. Por exemplo, vamos supor que o gerente comercial da Northwind quer saber quais pedidos tiveram um ticket médio acima da média. Primeiro, o subtotal de cada pedido precisa ser calcular a partir da tabela de Pedido Item (<code class="docutils literal notranslate"><span class="pre">OrderDetail</span></code>):</p>
@@ -828,6 +850,20 @@ SQL é uma linguagem rica e com enormes possibilidades. Dominá-lo permite ao an
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../05/case_when.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">5.5 Lógica condicional com  CASE WHEN</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../leia_mais.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Leia Mais</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             </footer>
         </div>

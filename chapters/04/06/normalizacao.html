@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Planilhas vs Bancos de Dados SQL: Quais as diferenças? &#8212; Engenharia de Analytics</title>
+    <title>4.6 ER e Normalização de dados &#8212; Engenharia de Analytics</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,7 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Leia Mais" href="../leia_mais.html" />
+    <link rel="next" title="4.7 O modelo dimensional e o esquema estrela" href="../07/dimensional.html" />
     <link rel="prev" title="4.5 Modelagem de Banco de Dados" href="../05/modelagem_bd.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -287,7 +287,22 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Planilhas vs Bancos de Dados SQL: Quais as diferenças?
+     4.6 ER e Normalização de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/dimensional.html">
+     4.7 O modelo dimensional e o esquema estrela
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/outros_modelos.html">
+     4.8 Outras classificações de modelagem de bancos de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/planilhas_bd.html">
+     4.9 Planilhas vs Bancos de Dados SQL: Quais as diferenças?
     </a>
    </li>
    <li class="toctree-l2">
@@ -330,6 +345,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="../../05/05/case_when.html">
      5.5 Lógica condicional com  CASE WHEN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/06/sub.html">
+     Subqueries e CTE
     </a>
    </li>
    <li class="toctree-l2">
@@ -542,7 +562,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/dpavancini/eng-de-analytics-livro/issues/new?title=Issue%20on%20page%20%2Fchapters/04/06/planilhas_bd.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/dpavancini/eng-de-analytics-livro/issues/new?title=Issue%20on%20page%20%2Fchapters/04/06/normalizacao.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -570,7 +590,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../../_sources/chapters/04/06/planilhas_bd.md"
+        <a href="../../../_sources/chapters/04/06/normalizacao.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -607,100 +627,23 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
-</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#consistencia">
-   Consistência
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#reprodutibilidade">
-   Reprodutibilidade
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ausencia-de-chaves">
-   Ausência de chaves
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#velocidade">
-   Velocidade
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#volume">
-   Volume
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
     </div>
     <div class="article row">
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Planilhas vs Bancos de Dados SQL: Quais as diferenças?</h1>
+                <h1>4.6 ER e Normalização de dados</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#consistencia">
-   Consistência
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#reprodutibilidade">
-   Reprodutibilidade
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ausencia-de-chaves">
-   Ausência de chaves
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#velocidade">
-   Velocidade
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#volume">
-   Volume
-  </a>
- </li>
-</ul>
-
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -708,30 +651,18 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="planilhas-vs-bancos-de-dados-sql-quais-as-diferencas">
-<h1>Planilhas vs Bancos de Dados SQL: Quais as diferenças?<a class="headerlink" href="#planilhas-vs-bancos-de-dados-sql-quais-as-diferencas" title="Permalink to this headline">#</a></h1>
-<p>Uma parte considerável dos dados das organizações estão armazenados não em bancos de dados propriamente ditos, mas em planilhas eletrônicas como o Microsoft Excel ou Google Sheets. Na superfície, não parece haver tantas diferenças entre os dois: dados são armazenados em tabelas com linhas e colunas, podem ser armazenados em diferentes tipos, agregados, concatenados, etc.  No entanto, algumas diferenças importantes existem entre os dois:</p>
-<section id="consistencia">
-<h2>Consistência<a class="headerlink" href="#consistencia" title="Permalink to this headline">#</a></h2>
-<p>Uma característica fundamental dos bancos de dados SQL é o rigor com os tipos de dados. Especificamente, cada coluna só pode armazenar um tipo de dado e inserir um valor que não respeita essa restrição deve gerar um erro. Planilhas eletrônicas, por sua vez, são extremamente flexíveis. É possível salvar praticamente qualquer informação em uma célula da planilha, aplicar funções sobre elas, comentários, ocultar e muito mais. Essa flexibilidade é muito interessante para uma simulação, gráficos ou um relatório rápido, mas quando se trata de armazenamento de dados as planilhas são muito perigosas e suscetíveis a erros.</p>
-</section>
-<section id="reprodutibilidade">
-<h2>Reprodutibilidade<a class="headerlink" href="#reprodutibilidade" title="Permalink to this headline">#</a></h2>
-<p>Para realizar uma consulta ou operações sobre dados em uma planilha, precisamos  de instruções detalhadas de como fazer essa consulta.  O resultado final da consulta (os dados) e a forma como chegamos nele se misturam e não há uma forma padrão de reproduzir os passos realizados. O resultado é que a depender da forma como fazemos esse processo, pode ser até mesmo impossível retornar aos dados iniciais que utilizamos no processo.  Para compartilhar a análise, precisamos enviar o arquivo da planilha.
-Em SQL, a consulta se preocupa com o que  queremos consultar, deixando ao banco de dados a tarefa de pensar como fazer a consulta. Dessa forma, separamos a camada de processamento da camada de dados, de modo que podemos compartilhar apenas as instruções (em um simples arquivo txt) e manter os dados isolados. Isso permite uma reprodutibilidade muito maior que em planilhas.</p>
-</section>
-<section id="ausencia-de-chaves">
-<h2>Ausência de chaves<a class="headerlink" href="#ausencia-de-chaves" title="Permalink to this headline">#</a></h2>
-<p>Um dos conceitos fundamentais do banco de dados SQL é o relacionamento entre os dados. Por exemplo, cada fatura salva em uma tabela de faturas é relacionada a um único cliente em uma tabela de clientes através de uma chave estrangeira. A existência de chaves formais facilita consultas e garante a consistência das análises. Por outro lado, é comum encontrar planilhas utilizadas como bancos de dados “informais”, através de chaves informais e funções como PROCV() e ÍNDICE(CORRESP()), que simulam o comportamento de chaves estrangeiras em bancos de dados porém com várias desvantagens, como o risco de erros, dados sem correspondência, entre outros. Em geral, se começamos a utilizar essas funções de forma recorrente em uma planilha é um sinal de que deveríamos estar utilizando um banco de dados.</p>
-</section>
-<section id="velocidade">
-<h2>Velocidade<a class="headerlink" href="#velocidade" title="Permalink to this headline">#</a></h2>
-<p>SQL é muito mais rápido que o Excel em volumes maiores de dados. Entre outros motivos, o banco de dados SQL utiliza índices para otimizar a consulta, além de várias otimizações não disponíveis em planilhas.</p>
-</section>
-<section id="volume">
-<h2>Volume<a class="headerlink" href="#volume" title="Permalink to this headline">#</a></h2>
-<p>Quando estamos trabalhando com um pequeno volume de dados, algumas centenas ou milhares de linhas, a opção entre planilha e banco de dados não é tão clara. Em grandes volumes, não há opção; as planilhas têm sérias limitações de volume de dados (EXCEL suporta até 1 milhão de linhas, mas com grandes dificuldades) enquanto bancos de dados SQL podem suportar milhões de linhas ou mesmo bilhões.</p>
-</section>
+  <section class="tex2jax_ignore mathjax_ignore" id="er-e-normalizacao-de-dados">
+<h1>4.6 ER e Normalização de dados<a class="headerlink" href="#er-e-normalizacao-de-dados" title="Permalink to this headline">#</a></h1>
+<p>Os modelos ER são muito utilizados pelos arquitetos de bancos de dados para facilitar a criação de bancos de dados normalizados pois facilitam visualizar as relações entre as tabelas no processo de normalização. Este processo é muito útil em bancos de dados transacionais porque ao evitar a redundância os bancos de dados conseguem fazer transações de escrita  de forma muito eficiente. Por exemplo, para registrar uma nova venda para um cliente é muitas vezes possível realizar uma única operação de escrita em uma única tabela do banco de dados.</p>
+<p>Quando o objetivo é realizar uma consulta analítica, entretanto, a normalização<a class="footnote-reference brackets" href="#normalizacao" id="id1">1</a> se torna um grande desafio para o analista. Na figura 4.6, por exemplo, a relação entre 2 tabelas como Pedidos e Territórios pode ser feita de muitas maneiras distintas e muitas delas não darão o mesmo resultado. Em bancos de dados normalizados, consultas são difíceis de otimizar e as chances de erros são grandes. Esse problema é especialmente importante quando utilizamos ferramentas de BI que inferem o modelo de dados de forma automática. Se os relacionamentos errados forem feitos, as consultas e métricas também estarão erradas. A normalização é complexa tanto para humanos como para máquinas.</p>
+<p>Além disso, bancos de dados transacionais frequentemente são “mutáveis”, isto é, salvam novos dados sem se preocupar com a histórias das alterações. Embora isso possa fazer sentido para um serviço operacional, as comparações ao longo do tempo e visualização de alterações são importantes para a análise de dados em geral.</p>
+<p>Como veremos no capítulo 6, os bancos de dados analíticos pedem um modelo de dados que seja otimizado para a análise de dados, não para o desenvolvedor de bancos de dados ou performance operacional. Geralmente esse modelo será alguma variação do chamado <strong>modelo dimensional</strong>, que não utiliza dados normalizados e simplifica sua estrutura nos chamados esquema estrela (do inglês, star schema).</p>
+<hr class="footnotes docutils" />
+<dl class="footnote brackets">
+<dt class="label" id="normalizacao"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Existem diferentes níveis de normalização de bancos de dados. A forma considerada “canônica” é chamada de terceira forma normal, ou simplesmente pela sigla 3FN. Nesse método, cada atributo de uma tabela deve depender apenas das chaves e nada mais.. Há inclusive uma frase em inglês utilizada para lembrar dessa restrição e que menciona Edgar Codd, o criador do modelo relacional: “The key, the whole key, and nothing but the key. So help me Codd”.</p>
+</dd>
+</dl>
 </section>
 
     <script type="text/x-thebe-config">
@@ -768,10 +699,10 @@ Em SQL, a consulta se preocupa com o que  queremos consultar, deixando ao banco 
             <p class="prev-next-title">4.5 Modelagem de Banco de Dados</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../leia_mais.html" title="next page">
+    <a class='right-next' id="next-link" href="../07/dimensional.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Leia Mais</p>
+        <p class="prev-next-title">4.7 O modelo dimensional e o esquema estrela</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

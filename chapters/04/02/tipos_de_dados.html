@@ -286,8 +286,23 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../06/planilhas_bd.html">
-     Planilhas vs Bancos de Dados SQL: Quais as diferenças?
+    <a class="reference internal" href="../06/normalizacao.html">
+     4.6 ER e Normalização de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/dimensional.html">
+     4.7 O modelo dimensional e o esquema estrela
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/outros_modelos.html">
+     4.8 Outras classificações de modelagem de bancos de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/planilhas_bd.html">
+     4.9 Planilhas vs Bancos de Dados SQL: Quais as diferenças?
     </a>
    </li>
    <li class="toctree-l2">
@@ -330,6 +345,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="../../05/05/case_when.html">
      5.5 Lógica condicional com  CASE WHEN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/06/sub.html">
+     Subqueries e CTE
     </a>
    </li>
    <li class="toctree-l2">
@@ -631,7 +651,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="tipos-de-dados">
+  <section class="tex2jax_ignore mathjax_ignore" id="tipos-de-dados">
 <h1>4.2 Tipos de Dados<a class="headerlink" href="#tipos-de-dados" title="Permalink to this headline">#</a></h1>
 <p>Diferente de planilhas, bancos de dados em geral não permitem misturar diferentes tipos de dados em uma mesma coluna.  Ao manipular e consultar bancos de dados é necessário entender quais os tipos de dados de cada coluna e assim saber as operações que podem ser realizadas com eles. Mas afinal, o que são tipos de dados?</p>
 <p>Em computação, tipos de dados são uma combinação de valores e operações que permitem ao computador entender como armazenar esses dados na memória. Variantes de um tipo de dados podem diferir quanto ao tamanho máximo do dado que permitem armazenar, precisão, formato aceito, entre outros.  Em bancos de dados, é comum que cada coluna ou atributo tenha um único tipo, sendo os mais comuns:</p>
