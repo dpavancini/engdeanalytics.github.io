@@ -94,7 +94,7 @@ const thebe_selector_output = ".output, .cell_output"
         
       
       
-      <img src="../../_static/logo.png" class="logo" alt="logo">
+      <img src="../../_static/logo_livro.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">Engenharia de Analytics</h1>
@@ -109,7 +109,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../../intro.html">
-                    Bem-vindo ao Livro Engenharia de Analytics
+                    Engenharia de Analytics
                 </a>
             </li>
         </ul>
@@ -151,7 +151,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../01/05/para_quem.html">
-     1.5 Para que é este livro
+     1.5 Para quem é este livro
     </a>
    </li>
    <li class="toctree-l2">
@@ -359,6 +359,16 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../06/intro.html">
+   Capítulo 6 -  Boas práticas de programação
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../07/intro.html">
+   Capítulo 7 -  A Infraestrutura Moderna de Analytics
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -367,8 +377,8 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../06/intro.html">
-   Capítulo 6 - Data Warehouses
+  <a class="reference internal" href="../08/intro.html">
+   Capítulo 8 - Data Warehouses
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
   <label for="toctree-checkbox-6">
@@ -377,87 +387,23 @@ const thebe_selector_output = ".output, .cell_output"
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../06/01/papel_mas_dw.html">
+    <a class="reference internal" href="../08/01/papel_mas_dw.html">
      6.1 O papel do Data Warehouse no Modern Analytics Stack
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../06/02/modelagem_dimensional.html">
+    <a class="reference internal" href="../08/02/modelagem_dimensional.html">
      6.2 O Modelo dimensional
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../06/03/esquema_estrela.html">
+    <a class="reference internal" href="../08/03/esquema_estrela.html">
      6.3 O esquema estrela
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../06/04/arquiteturas_dw.html">
+    <a class="reference internal" href="../08/04/arquiteturas_dw.html">
      6.4 Arquiteturas de Data Warehouse
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../06/leia_mais.html">
-     Leia Mais
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../07/intro.html">
-   Capítulo 7 - Tabelas Fato
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-  <label for="toctree-checkbox-7">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../07/01/medidas.html">
-     Tipos de Medidas
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../07/02/tipos_fato.html">
-     Tipos de Tabelas Fato
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../07/leia_mais.html">
-     Leia Mais
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../08/intro.html">
-   Capítulo 8 - Dimensões
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-  <label for="toctree-checkbox-8">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../08/01/chaves.html">
-     7.1 Tipo de Chaves
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../08/02/scd.html">
-     7.2 Dimensão de Alteração Lenta  (SCD)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../08/03/degeneradas.html">
-     7.3 Dimensões degeneradas
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../08/04/junk.html">
-     7.4 Dimensões Junk
     </a>
    </li>
    <li class="toctree-l2">
@@ -467,10 +413,189 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../09/intro.html">
-   Capítulo 9 -  Modelando um Data Warehouse
+   Capítulo 9 - Fatos
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/01/medidas.html">
+     Tipos de Medidas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/02/tipos_fato.html">
+     Tipos de Tabelas Fato
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../10/intro.html">
+   Capítulo 10 - Dimensões
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/01/chaves.html">
+     7.1 Tipo de Chaves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/02/scd.html">
+     7.2 Dimensão de Alteração Lenta  (SCD)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/03/degeneradas.html">
+     7.3 Dimensões degeneradas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/04/junk.html">
+     7.4 Dimensões Junk
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../11/intro.html">
+   Capítulo 11 -  Modelando um Data Warehouse
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/01/etapas.html">
+     9.1 Etapas de Modelagem do DW
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/02/planejando_marts.html">
+     9.2 Planejando os Data Marts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/03/planejando_dimensoes.html">
+     9.3 Planejando as dimensões
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/04/criando_modelos.html">
+     9.4 Criando os modelos conceituais
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/05/mapeamento_chaves.html">
+     9.5 Mapeamento de Chaves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/06/tabela_fato.html">
+     9.6 Modelando a Tabela Fato
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/07/agregadas_derivadas.html">
+     9.7 Tabelas Agregadas e Derivadas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../12/intro.html">
+   Capítulo 12 -  Configurando um Data Warehouse com Big Query
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Transformando dados
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../13/intro.html">
+   Capítulo 13 -  Introdução ao ETL e ELT
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../14/intro.html">
+   Capítulo 14 -  Ingestão de dados
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../15/intro.html">
+   Capítulo 15 -  Transformação de dados
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../15/01/arquiteturas_transformacao.html">
+     Alternativas de Arquitetura de ETL/ELT
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../16/intro.html">
+   Capítulo 16 - DataOps: Engenharia de software para dados
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tópicos Adicionais
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../17/intro.html">
+   Capítulo 17 - MAS na prática com Postgres, Airbyte, dbt e Metabase
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../18/intro.html">
+   Capítulo 18 - Tópicos adicionais
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../18/01/etl_vs_elt.html">
+     ETL vs ETL
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -652,7 +777,7 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="capitulo-4-bancos-de-dados">
-<span id="target-header"></span><h1>Capítulo 4 - Bancos de dados<a class="headerlink" href="#capitulo-4-bancos-de-dados" title="Permalink to this headline">#</a></h1>
+<span id="banco-dados"></span><h1>Capítulo 4 - Bancos de dados<a class="headerlink" href="#capitulo-4-bancos-de-dados" title="Permalink to this headline">#</a></h1>
 <p>Um sistema de gerenciamento de banco de dados  (SGBD)  ou simplesmente, banco de dados, é um conjunto de programas de software que permite aos usuários criar, editar, atualizar, armazenar e recuperar dados em tabelas de banco de dados. Dados em um banco de dados podem ser acrescentados, apagados, alterados, classificados usando um  SGBD (Gomes, 2020).</p>
 <p>De forma simplificada, um SGBD deve conter um programa de consultas que permite a um usuário humano ou máquina interagir com o banco de dados. Essas consultas são processadas por um Motor de Processamento de Consultas na chamada Camada de Processamento. Esse programa é então responsável por traduzir a consulta feita em alguma linguagem específica para um processo de mapear e retornar as informações requisitadas de onde elas estão fisicamente armazenadas no banco de dados.</p>
 <p><img alt="" src="../../_images/banco_de_dados.png" /></p>
