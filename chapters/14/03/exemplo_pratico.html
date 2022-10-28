@@ -1,0 +1,1051 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>14.3 Ingestão de dados na prática &#8212; Engenharia de Analytics</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://www.engdeanalytics.com.br/chapters/14/03/exemplo_pratico.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Capítulo 15 - Transformação de dados" href="../../15/intro.html" />
+    <link rel="prev" title="14.2 Tipos de Ingestão" href="../02/tipos_de_ingestao.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XDLZWNXBSG"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-XDLZWNXBSG');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/logo_livro.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Engenharia de Analytics</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Engenharia de Analytics
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Fundamentos
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../01/intro.html">
+   Capítulo 1 - Introdução
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/01/por_que_analytics.html">
+     1.1 Por quê Engenharia de Analytics?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/02/carreiras_atuais.html">
+     1.2 Redefinindo equipes de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/03/responsabilidades.html">
+     1.3 As responsabilidades do Engenheiro de Analytics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/04/northwind.html">
+     1.4 Estudo de caso: Northwind Traders
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/05/para_quem.html">
+     1.5 Para quem é este livro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/06/como_organizado.html">
+     1.6 Como este livro está organizado
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/leia_mais.html">
+     1.7 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../02/intro.html">
+   Capítulo 2 - Fundamentos de Analytics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/01/5_vs.html">
+     2.1 Os 5 Vs do big data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/02/volume.html">
+     2.2 Volume
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/03/velocidade.html">
+     2.3 Velocidade
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/04/variedade.html">
+     2.4 Variedade
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/05/veracidade.html">
+     2.5 Veracidade
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/06/valor.html">
+     2.6 Valor
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/leia_mais.html">
+     2.7 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../03/intro.html">
+   Capítulo 3 - Pensando de forma analítica
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/01/pensamento_analitico.html">
+     3.1 O pensamento analítico
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/02/tecnicas_problemas.html">
+     3.2 Técnicas para resolução de problemas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/03/pareto.html">
+     3.3 Diagrama de Pareto
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/04/5_porques.html">
+     3.4 Os 5 porquês
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/leia_mais.html">
+     3.5 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../04/intro.html">
+   Capítulo 4 - Bancos de dados
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/01/tipos_de_bd.html">
+     4.1 Tipos de Bancos de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/02/tipos_de_dados.html">
+     4.2 Tipos de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/03/modelo_relacional.html">
+     4.3 Modelo Relacional
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/04/indices.html">
+     4.4 Trabalhando com índices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/05/modelagem_bd.html">
+     4.5 Modelagem de Banco de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/06/normalizacao.html">
+     4.6 ER e Normalização de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/07/dimensional.html">
+     4.7 O modelo dimensional e o esquema estrela
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/08/outros_modelos.html">
+     4.8 Outras classificações de modelagem de bancos de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/09/planilhas_bd.html">
+     4.9 Planilhas vs Bancos de Dados SQL: Quais as diferenças?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/leia_mais.html">
+     4.10 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../05/intro.html">
+   Capítulo 5 - SQL para Análise de Dados
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/01/select.html">
+     5.1 Consultando dados com SELECT, WHERE e ORDER BY
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/02/join.html">
+     5.2 Juntando dados com JOIN e UNION
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/03/agregadas.html">
+     5.3 Funções Agregadas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/04/group_by.html">
+     5.4 Trabalhando com agrupamentos GROUP BY
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/05/case_when.html">
+     5.5 Lógica condicional com  CASE WHEN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/06/sub.html">
+     5.6 Subqueries e CTE
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../06/intro.html">
+   Capítulo 6 -  Boas práticas de desenvolvimento
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/01/boas_praticas_prog.html">
+     6.1 Boas práticas de programação
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/02/boas_praticas_dev.html">
+     6.2 Boas práticas de desenvolvimento
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/03/intro_git.html">
+     6.3 Introdução ao controle de Versão e Git
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/04/git_pratica.html">
+     6.4 Git na prática
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/leia_mais.html">
+     6.4 Leia mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../07/intro.html">
+   Capítulo 7 -  O Modern Data Stack
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Modelando Dados
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../08/intro.html">
+   Capítulo 8 - Data Warehouses
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/01/papel_mas_dw.html">
+     8.1 O papel do Data Warehouse no Modern Data Stack
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/02/modelagem_dimensional.html">
+     8.2 O Modelo dimensional
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/03/esquema_estrela.html">
+     8.3 O esquema estrela
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/leia_mais.html">
+     8.4 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../09/intro.html">
+   Capítulo 9 - Fatos
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../09/01/medidas.html">
+     9.1 Tipos de Medidas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../09/02/tipos_fato.html">
+     9.2 Tipos de Tabelas Fato
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../09/leia_mais.html">
+     9.3 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../10/intro.html">
+   Capítulo 10 - Dimensões
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/01/chaves.html">
+     10.1 Tipo de Chaves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/02/scd.html">
+     10.2 Dimensão de Alteração Lenta  (SCD)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/03/degeneradas.html">
+     10.3 Dimensões degeneradas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/04/junk.html">
+     7.4 Dimensões Junk
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/leia_mais.html">
+     10.4 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../11/intro.html">
+   Capítulo 11 -  Modelando um Data Warehouse
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/01/etapas.html">
+     11.1 Etapas de Modelagem do DW
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/02/planejando_marts.html">
+     11.2 Planejando os Data Marts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/03/planejando_dimensoes.html">
+     11.3 Planejando as dimensões
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/04/criando_modelos.html">
+     11.4 Criando os modelos conceituais
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/05/mapeamento_chaves.html">
+     11.5 Mapeamento de Chaves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/06/tabela_fato.html">
+     11.6 Modelando a Tabela Fato
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/07/agregadas_derivadas.html">
+     11.7 Tabelas Agregadas e Derivadas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/leia_mais.html">
+     11.8 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../12/intro.html">
+   Capítulo 12 -  Configurando um Data Warehouse com Big Query
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Transformando dados
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../13/intro.html">
+   Capítulo 13 -  Introdução ao ELT
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../13/01/etl.html">
+     13.1 O Precursor: ETL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../13/02/elt.html">
+     13.2 O ELT
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../13/03/processo_elt.html">
+     13.3 O Processo de ELT
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../intro.html">
+   Capítulo 14 -  Ingestão de dados
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/acessando_dados.html">
+     14.1 Acessando dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tipos_de_ingestao.html">
+     14.2 Tipos de Ingestão
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     14.3 Ingestão de dados na prática
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../15/intro.html">
+   Capítulo 15 -  Transformação de dados
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+  <label for="toctree-checkbox-13">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../15/01/processos_transformacao.html">
+     15.1 Os Processos de Transformação
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../15/02/arquiteturas_transformacao.html">
+     15.2 Alternativas de Arquitetura de ETL/ELT
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../15/03/dbt.html">
+     15.3 Transformação de dados com dbt
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/dpavancini/eng-de-analytics-livro"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/dpavancini/eng-de-analytics-livro/issues/new?title=Issue%20on%20page%20%2Fchapters/14/03/exemplo_pratico.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/chapters/14/03/exemplo_pratico.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#instalando-o-airbyte">
+   Instalando o Airbyte
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#configurando-uma-fonte-de-dados">
+   Configurando uma fonte de dados
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#configurando-um-destino">
+   Configurando um destino
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ativando-um-sync">
+   Ativando um
+   <em>
+    sync
+   </em>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pronto">
+   Pronto!
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>14.3 Ingestão de dados na prática</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#instalando-o-airbyte">
+   Instalando o Airbyte
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#configurando-uma-fonte-de-dados">
+   Configurando uma fonte de dados
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#configurando-um-destino">
+   Configurando um destino
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ativando-um-sync">
+   Ativando um
+   <em>
+    sync
+   </em>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pronto">
+   Pronto!
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="ingestao-de-dados-na-pratica">
+<span id="ingestao-pratica"></span><h1>14.3 Ingestão de dados na prática<a class="headerlink" href="#ingestao-de-dados-na-pratica" title="Permalink to this headline">#</a></h1>
+<!-- Fazer usando Airbyte? Ou Hevo? -->
+<p>A ingestão de dados no ELT é realizada de forma a reduzir ao mínimo a transformação dos dados brutos que serão carregados no data warehouse. Na prática, há diferentes formas de realizar essa ingestão desde que esse princípio de mínima transformação seja mantido.</p>
+<p>Entre as principais ferramentas do <em>Modern Data Stack</em> utilizadas para a ingestão de dados destacamos alternativas SaaS como <a class="reference external" href="https://www.fivetran.com/">Fivetran</a>, <a class="reference external" href="https://www.stitchdata.com/">Stitch</a> e <a class="reference external" href="https://hevodata.com/">Hevo</a>, além de alternaticas open-source como o <a class="reference external" href="https://airbyte.com/">Airbyte</a> e <a class="reference external" href="https://meltano.com/">Meltano</a>.</p>
+<p>A escolha entre <strong>contratar</strong> uma ferramenta SaaS ou <strong>implementar</strong> uma solução <em>open-source</em> vai depender da sua capacidade de investimento e competências do time de dados. Também deve ser levado em conta se a solução escolhida possui todas as integrações necessárias para o projeto. Em alguns casos, pode ainda ser necessário desenvolver uma nova integração, o que geralmente é facilitado ao implementarmos uma solução <em>open-source</em>.</p>
+<p>Para o exemplo prático deste capítulo utilizaremos a ferramenta <em>Airbyte</em> que pode ser configurada diretamente em seu computador seguindo as instruções nesta <a class="reference external" href="https://docs.airbyte.com/quickstart/deploy-airbyte/">página</a>.</p>
+<section id="instalando-o-airbyte">
+<h2>Instalando o Airbyte<a class="headerlink" href="#instalando-o-airbyte" title="Permalink to this headline">#</a></h2>
+<p>Se você configurou seguiu as <a class="reference external" href="https://docs.airbyte.com/quickstart/deploy-airbyte/">instruções de instalação</a> do Airbyte ele deverá estar disponível em <a class="reference external" href="http://localhost:8000">http://localhost:8000</a>.</p>
+</section>
+<section id="configurando-uma-fonte-de-dados">
+<h2>Configurando uma fonte de dados<a class="headerlink" href="#configurando-uma-fonte-de-dados" title="Permalink to this headline">#</a></h2>
+<p>A fonte de dados do nosso exemplo será o banco de dados da Northwind que você deverá ter configurado em seu computador ou em algum outro ambiente que tenha acesso.</p>
+<p>Se você ainda não possui um banco de dados configurado, pode criá-lo através do seguinte comando (se requisitada, inserir a senha <em>password</em>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="o">--</span><span class="n">name</span> <span class="n">northwind</span> <span class="o">-</span><span class="n">e</span> <span class="n">POSTGRES_PASSWORD</span><span class="o">=</span><span class="n">password</span> <span class="o">-</span><span class="n">p</span> <span class="mi">5432</span><span class="p">:</span><span class="mi">5432</span> <span class="o">-</span><span class="n">d</span> <span class="n">postgres</span>
+<span class="n">createdb</span> <span class="n">psql</span> <span class="o">-</span><span class="n">h</span> <span class="n">localhost</span> <span class="o">-</span><span class="n">U</span> <span class="n">postgres</span> <span class="o">-</span><span class="n">p</span> <span class="mi">5432</span> <span class="n">northwind</span>
+<span class="n">cat</span> <span class="n">assets</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">northwind</span><span class="o">.</span><span class="n">sql</span> <span class="o">|</span> <span class="n">psql</span> <span class="o">-</span><span class="n">h</span> <span class="n">localhost</span> <span class="o">-</span><span class="n">U</span> <span class="n">postgres</span> <span class="o">-</span><span class="n">p</span> <span class="mi">5432</span> <span class="o">-</span><span class="n">d</span> <span class="n">northwind</span>
+</pre></div>
+</div>
+<p>O banco de dados da <em>northwind</em> estará disponível no seguinte endereço:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span><span class="p">:</span> <span class="n">localhost</span>
+<span class="n">Port</span><span class="p">:</span> <span class="mi">5432</span>
+<span class="n">User</span><span class="p">:</span> <span class="n">postgres</span>
+<span class="n">Password</span><span class="p">:</span> <span class="n">password</span>
+<span class="n">Database</span><span class="p">:</span> <span class="n">northwind</span>
+</pre></div>
+</div>
+<p>Que poderá ser acessado na tela de configuração de uma fonte (<em>source</em>) no <em>Airbyte</em> como abaixo:</p>
+<figure class="align-default" id="source-airbyte">
+<a class="reference internal image-reference" href="../../../_images/source.png"><img alt="../../../_images/source.png" src="../../../_images/source.png" style="height: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 48 </span><span class="caption-text">Configurando uma fonte no Airbyte</span><a class="headerlink" href="#source-airbyte" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="configurando-um-destino">
+<h2>Configurando um destino<a class="headerlink" href="#configurando-um-destino" title="Permalink to this headline">#</a></h2>
+<p>Agora vamos escrever em um Data Warehouse (<em>BigQuery</em>). Para isso vamos criar um destino para o BigQuery e uma <a class="reference external" href="https://cloud.google.com/bigquery/docs/use-service-accounts?hl=pt-br">conta de serviço</a> que permite escrever no BigQuery. Essa conta deverá ter as permissões de <code class="docutils literal notranslate"><span class="pre">Usuário</span> <span class="pre">do</span> <span class="pre">BigQuery</span></code> e <code class="docutils literal notranslate"><span class="pre">Editor</span> <span class="pre">de</span> <span class="pre">dados</span> <span class="pre">do</span> <span class="pre">BigQuery</span></code>. Você deverá criar uma chave <code class="docutils literal notranslate"><span class="pre">JSON</span></code> e adicioná-la no campo <em>credentials</em> do Airbyte:</p>
+<figure class="align-default" id="destination-airbyte">
+<a class="reference internal image-reference" href="../../../_images/destination.png"><img alt="../../../_images/destination.png" src="../../../_images/destination.png" style="height: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 49 </span><span class="caption-text">Configurando um destino no Airbyte</span><a class="headerlink" href="#destination-airbyte" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="ativando-um-sync">
+<h2>Ativando um <em>sync</em><a class="headerlink" href="#ativando-um-sync" title="Permalink to this headline">#</a></h2>
+<p>Para executar a ingestão de dados em si, precisamos realizar um <em>sync</em> da conexão entre fonte e destindo de dados no Airbyte. Cada <em>sync</em> pode ser configurado para executar em intervalos pré-definidos (ex. a cada 24 horas), por período (ex. todo dia às 02:00) ou através de configurações avançadas de CRON. VocÊ pode verificar o status de cada <em>sync</em> na página <em>Connections</em></p>
+<figure class="align-default" id="sync-airbyte">
+<a class="reference internal image-reference" href="../../../_images/sync_airbyte.png"><img alt="../../../_images/sync_airbyte.png" src="../../../_images/sync_airbyte.png" style="height: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Verificando o status dos <em>syncs</em> no Airbyte</span><a class="headerlink" href="#sync-airbyte" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="pronto">
+<h2>Pronto!<a class="headerlink" href="#pronto" title="Permalink to this headline">#</a></h2>
+<p>É tão simples quanto parece. O processo de ingestão se resume a configurar conexões entre a fonte de dados e o <em>data warehouse</em>, deixando o trabalho duro para a etapa de transformação. O processo é muito semelhante se utilizássemos outras ferramentas de ingestão do ELT, mudando apenas algumas nomenclaturas.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters/14/03"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../02/tipos_de_ingestao.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">14.2 Tipos de Ingestão</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../../15/intro.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Capítulo 15 -  Transformação de dados</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Daniel Paulon Avancini<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

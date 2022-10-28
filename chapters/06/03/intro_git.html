@@ -1,0 +1,1095 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>6.3 Introdução ao controle de Versão e Git &#8212; Engenharia de Analytics</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://www.engdeanalytics.com.br/chapters/06/03/intro_git.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="6.4 Git na prática" href="../04/git_pratica.html" />
+    <link rel="prev" title="6.2 Boas práticas de desenvolvimento" href="../02/boas_praticas_dev.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XDLZWNXBSG"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-XDLZWNXBSG');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/logo_livro.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Engenharia de Analytics</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Engenharia de Analytics
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Fundamentos
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../01/intro.html">
+   Capítulo 1 - Introdução
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/01/por_que_analytics.html">
+     1.1 Por quê Engenharia de Analytics?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/02/carreiras_atuais.html">
+     1.2 Redefinindo equipes de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/03/responsabilidades.html">
+     1.3 As responsabilidades do Engenheiro de Analytics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/04/northwind.html">
+     1.4 Estudo de caso: Northwind Traders
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/05/para_quem.html">
+     1.5 Para quem é este livro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/06/como_organizado.html">
+     1.6 Como este livro está organizado
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/leia_mais.html">
+     1.7 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../02/intro.html">
+   Capítulo 2 - Fundamentos de Analytics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/01/5_vs.html">
+     2.1 Os 5 Vs do big data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/02/volume.html">
+     2.2 Volume
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/03/velocidade.html">
+     2.3 Velocidade
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/04/variedade.html">
+     2.4 Variedade
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/05/veracidade.html">
+     2.5 Veracidade
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/06/valor.html">
+     2.6 Valor
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/leia_mais.html">
+     2.7 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../03/intro.html">
+   Capítulo 3 - Pensando de forma analítica
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/01/pensamento_analitico.html">
+     3.1 O pensamento analítico
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/02/tecnicas_problemas.html">
+     3.2 Técnicas para resolução de problemas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/03/pareto.html">
+     3.3 Diagrama de Pareto
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/04/5_porques.html">
+     3.4 Os 5 porquês
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/leia_mais.html">
+     3.5 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../04/intro.html">
+   Capítulo 4 - Bancos de dados
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/01/tipos_de_bd.html">
+     4.1 Tipos de Bancos de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/02/tipos_de_dados.html">
+     4.2 Tipos de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/03/modelo_relacional.html">
+     4.3 Modelo Relacional
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/04/indices.html">
+     4.4 Trabalhando com índices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/05/modelagem_bd.html">
+     4.5 Modelagem de Banco de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/06/normalizacao.html">
+     4.6 ER e Normalização de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/07/dimensional.html">
+     4.7 O modelo dimensional e o esquema estrela
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/08/outros_modelos.html">
+     4.8 Outras classificações de modelagem de bancos de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/09/planilhas_bd.html">
+     4.9 Planilhas vs Bancos de Dados SQL: Quais as diferenças?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/leia_mais.html">
+     4.10 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../05/intro.html">
+   Capítulo 5 - SQL para Análise de Dados
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/01/select.html">
+     5.1 Consultando dados com SELECT, WHERE e ORDER BY
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/02/join.html">
+     5.2 Juntando dados com JOIN e UNION
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/03/agregadas.html">
+     5.3 Funções Agregadas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/04/group_by.html">
+     5.4 Trabalhando com agrupamentos GROUP BY
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/05/case_when.html">
+     5.5 Lógica condicional com  CASE WHEN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/06/sub.html">
+     5.6 Subqueries e CTE
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../intro.html">
+   Capítulo 6 -  Boas práticas de desenvolvimento
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/boas_praticas_prog.html">
+     6.1 Boas práticas de programação
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/boas_praticas_dev.html">
+     6.2 Boas práticas de desenvolvimento
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     6.3 Introdução ao controle de Versão e Git
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/git_pratica.html">
+     6.4 Git na prática
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../leia_mais.html">
+     6.4 Leia mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../07/intro.html">
+   Capítulo 7 -  O Modern Data Stack
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Modelando Dados
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../08/intro.html">
+   Capítulo 8 - Data Warehouses
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/01/papel_mas_dw.html">
+     8.1 O papel do Data Warehouse no Modern Data Stack
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/02/modelagem_dimensional.html">
+     8.2 O Modelo dimensional
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/03/esquema_estrela.html">
+     8.3 O esquema estrela
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/leia_mais.html">
+     8.4 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../09/intro.html">
+   Capítulo 9 - Fatos
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../09/01/medidas.html">
+     9.1 Tipos de Medidas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../09/02/tipos_fato.html">
+     9.2 Tipos de Tabelas Fato
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../09/leia_mais.html">
+     9.3 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../10/intro.html">
+   Capítulo 10 - Dimensões
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/01/chaves.html">
+     10.1 Tipo de Chaves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/02/scd.html">
+     10.2 Dimensão de Alteração Lenta  (SCD)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/03/degeneradas.html">
+     10.3 Dimensões degeneradas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/04/junk.html">
+     7.4 Dimensões Junk
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/leia_mais.html">
+     10.4 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../11/intro.html">
+   Capítulo 11 -  Modelando um Data Warehouse
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/01/etapas.html">
+     11.1 Etapas de Modelagem do DW
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/02/planejando_marts.html">
+     11.2 Planejando os Data Marts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/03/planejando_dimensoes.html">
+     11.3 Planejando as dimensões
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/04/criando_modelos.html">
+     11.4 Criando os modelos conceituais
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/05/mapeamento_chaves.html">
+     11.5 Mapeamento de Chaves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/06/tabela_fato.html">
+     11.6 Modelando a Tabela Fato
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/07/agregadas_derivadas.html">
+     11.7 Tabelas Agregadas e Derivadas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/leia_mais.html">
+     11.8 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../12/intro.html">
+   Capítulo 12 -  Configurando um Data Warehouse com Big Query
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Transformando dados
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../13/intro.html">
+   Capítulo 13 -  Introdução ao ELT
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../13/01/etl.html">
+     13.1 O Precursor: ETL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../13/02/elt.html">
+     13.2 O ELT
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../13/03/processo_elt.html">
+     13.3 O Processo de ELT
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../14/intro.html">
+   Capítulo 14 -  Ingestão de dados
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../14/01/acessando_dados.html">
+     14.1 Acessando dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../14/02/tipos_de_ingestao.html">
+     14.2 Tipos de Ingestão
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../14/03/exemplo_pratico.html">
+     14.3 Ingestão de dados na prática
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../15/intro.html">
+   Capítulo 15 -  Transformação de dados
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+  <label for="toctree-checkbox-13">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../15/01/processos_transformacao.html">
+     15.1 Os Processos de Transformação
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../15/02/arquiteturas_transformacao.html">
+     15.2 Alternativas de Arquitetura de ETL/ELT
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../15/03/dbt.html">
+     15.3 Transformação de dados com dbt
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/dpavancini/eng-de-analytics-livro"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/dpavancini/eng-de-analytics-livro/issues/new?title=Issue%20on%20page%20%2Fchapters/06/03/intro_git.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/chapters/06/03/intro_git.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#por-que-precisamos-de-um-controle-de-versao">
+   Por quê precisamos de um controle de versão?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#o-que-e-o-git">
+   O que é o git?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#breve-historia-do-git">
+   Breve História do Git
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#como-o-git-funciona">
+   Como o Git funciona
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#os-tres-estados-do-git">
+   Os três Estados do Git
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>6.3 Introdução ao controle de Versão e Git</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#por-que-precisamos-de-um-controle-de-versao">
+   Por quê precisamos de um controle de versão?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#o-que-e-o-git">
+   O que é o git?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#breve-historia-do-git">
+   Breve História do Git
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#como-o-git-funciona">
+   Como o Git funciona
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#os-tres-estados-do-git">
+   Os três Estados do Git
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="introducao-ao-controle-de-versao-e-git">
+<span id="git"></span><h1>6.3 Introdução ao controle de Versão e Git<a class="headerlink" href="#introducao-ao-controle-de-versao-e-git" title="Permalink to this headline">#</a></h1>
+<p>Nesta seção falaremos do controle de versão, um dos processos mais importantes no desenvolvimento de softwares e também na Engenharia de Analytics. Também falaremos da ferramenta mais popular de controle de versão chamada git. Vamos lá?</p>
+<section id="por-que-precisamos-de-um-controle-de-versao">
+<h2>Por quê precisamos de um controle de versão?<a class="headerlink" href="#por-que-precisamos-de-um-controle-de-versao" title="Permalink to this headline">#</a></h2>
+<p>Em primeiro lugar você deve estar se perguntando, afinal o que é “controle de versão”? Eu realmente preciso aprender isso? A resposta começa identificando que você provavelmente já possui seu próprio sistema de controle de versão “caseiro”:</p>
+<figure class="align-default" id="excel-copia">
+<img alt="../../../_images/excel_copia.png" src="../../../_images/excel_copia.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Quem nunca sofreu com isso? Fonte: <a class="reference external" href="https://dropboxfix.wordpress.com/">dropbox.fix</a></span><a class="headerlink" href="#excel-copia" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Ou seja, o controle de versão é um processo que registra alterações em um arquivo ou conjunto de arquivos para que você possa lembrar ou retomar versões específicas mais tarde. Infelizmente, a maior parte das aplicações não possuem um controle de versão bem desenvolvido ou que permita ainda o trabalho colaborativo como o necessário em projetos complexos de software ou dados.</p>
+<div class="admonition-curiosidade admonition">
+<p class="admonition-title">Curiosidade</p>
+<p>Quem já experimentou a experiência de “Cópia com conflito” no Excel sabe o que é um sistema de controle de versão que não facilita o desenvolvimento colaborativo.</p>
+</div>
+<p>Um sistema de Controle de Versão moderno precisa atender a alguns requisitos:</p>
+<ul class="simple">
+<li><p>Permitir diferentes “versões” de uma arquivo ou conjunto de arquivos</p></li>
+<li><p>Ter a capacidade de retomar versões passadas (ou futuras) de um arquivo (“viagem no tempo”)</p></li>
+<li><p>Conseguir verificar possíveis conflitos entre arquivos e como resolvê-los</p></li>
+<li><p>Ver quem modificou pela última vez um arquivo ou parte de um arquivo</p></li>
+<li><p>Permitir sincronizar arquivos ou conjunto de arquivos entre diferentes repositórios ou computadores</p></li>
+<li><p>Garantir que arquivos sejam recuperados se apagados acidentalmente sem perdas</p></li>
+</ul>
+<p>Ao longo do tempo diferentes sistemas de controle de versão foram desenvolvidos para atender a estes requisitos. O mais popular deles é o Git, desenvolvido para facilitar a manutenção do código-fonte (<em>kernel</em>) do Linux por Linus Torvaldis (o criador do Linux) e hoje utilizado por milhões de desenvolvedores mundo afora.</p>
+</section>
+<section id="o-que-e-o-git">
+<h2>O que é o git?<a class="headerlink" href="#o-que-e-o-git" title="Permalink to this headline">#</a></h2>
+<p>O Git é um sistema de controle de versão distribuído que pode ser usado em qualquer tipo de arquivo, mas tem seu uso principal no desenvolvimento de software.</p>
+<p>O  Git é organizado em <strong>repositórios</strong> que controlam a versão de todos os arquivos (ou parte deles) em um diretório (ou pasta) e seus subdiretórios. Ao iniciar um repositório git em um diretório, nós adicionamos a este respositório a capacidade de registrar localmente todas as alterações realizadas em seus arquivos e também a capacidade de “sincronizar” esse diretório com ambientes remotos.</p>
+<div class="admonition-voce-sabia admonition">
+<p class="admonition-title">Você sabia?</p>
+<p>A maior plataforma de hospedagem de Git, o <a class="reference external" href="https://github.com/about">Github</a>, é usado por mais de 83 milhõres de usuários ativos e possui mais de 200 milhões de projetos hospedados. Em 2018 ela foi adquirida pela Microsoft por U$7,5 bilhões.</p>
+</div>
+</section>
+<section id="breve-historia-do-git">
+<h2>Breve História do Git<a class="headerlink" href="#breve-historia-do-git" title="Permalink to this headline">#</a></h2>
+<p>O Git foi desenvolvido para substituir um sistema Controle de Versão proprietário utilizado pelo time de desenvolvimento do <em>kernel</em> Linux até então chamado BitKeeper. Por ser um sistema de código-aberto, a decisão da BitKeeper em cobrar pelo seu serviço tornou seu uso inviável por Linus e seu time. Assim, o Git foi desenvolvido com algumas <a class="reference external" href="https://git-scm.com/book/pt-br/v2/Come%C3%A7ando-Uma-Breve-Hist%C3%B3ria-do-Git">metas em mente</a>:</p>
+<ul class="simple">
+<li><p>Velocidade</p></li>
+<li><p>Projeto simples</p></li>
+<li><p>Forte suporte para desenvolvimento não-linear (milhares de ramos paralelos)</p></li>
+<li><p>Completamente distribuído</p></li>
+<li><p>Capaz de lidar com projetos grandes como o núcleo o Linux com eficiência (velocidade e tamanho dos dados)</p></li>
+</ul>
+<p>Em seu primeiro <em>commit</em> em 7 de Abril de 2005, Linus Torvaldis <a class="reference external" href="https://initialcommit.com/blog/How-Did-Git-Get-Its-Name">escreveu</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Initial</span> <span class="n">revision</span> <span class="n">of</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="n">the</span> <span class="n">information</span> <span class="n">manager</span> <span class="kn">from</span> <span class="nn">hell</span>
+</pre></div>
+</div>
+<p>Ele também adicionou um arquivo <code class="docutils literal notranslate"><span class="pre">README</span></code> com seu tom sarcástico característico:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GIT</span> <span class="o">-</span> <span class="n">the</span> <span class="n">stupid</span> <span class="n">content</span> <span class="n">tracker</span>
+
+<span class="s2">&quot;git&quot;</span> <span class="n">can</span> <span class="n">mean</span> <span class="n">anything</span><span class="p">,</span> <span class="n">depending</span> <span class="n">on</span> <span class="n">your</span> <span class="n">mood</span><span class="o">.</span>
+
+ <span class="o">-</span> <span class="n">random</span> <span class="n">three</span><span class="o">-</span><span class="n">letter</span> <span class="n">combination</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">pronounceable</span><span class="p">,</span> <span class="ow">and</span> <span class="ow">not</span> 
+   <span class="n">actually</span> <span class="n">used</span> <span class="n">by</span> <span class="nb">any</span> <span class="n">common</span> <span class="n">UNIX</span> <span class="n">command</span><span class="o">.</span>  <span class="n">The</span> <span class="n">fact</span> <span class="n">that</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">a</span>
+   <span class="n">mispronunciation</span> <span class="n">of</span> <span class="s2">&quot;get&quot;</span> <span class="n">may</span> <span class="ow">or</span> <span class="n">may</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">relevant</span><span class="o">.</span>
+ <span class="o">-</span> <span class="n">stupid</span><span class="o">.</span> <span class="n">contemptible</span> <span class="ow">and</span> <span class="n">despicable</span><span class="o">.</span> <span class="n">simple</span><span class="o">.</span> <span class="n">Take</span> <span class="n">your</span> <span class="n">pick</span> <span class="kn">from</span> <span class="nn">the</span> 
+   <span class="n">dictionary</span> <span class="n">of</span> <span class="n">slang</span><span class="o">.</span>
+ <span class="o">-</span> <span class="s2">&quot;global information tracker&quot;</span><span class="p">:</span> <span class="n">you</span><span class="s1">&#39;re in a good mood, and it actually</span>
+   <span class="n">works</span> <span class="k">for</span> <span class="n">you</span><span class="o">.</span> <span class="n">Angels</span> <span class="n">sing</span><span class="p">,</span> <span class="ow">and</span> <span class="n">a</span> <span class="n">light</span> <span class="n">suddenly</span> <span class="n">fills</span> <span class="n">the</span> <span class="n">room</span><span class="o">.</span> 
+ <span class="o">-</span> <span class="s2">&quot;goddamn idiotic truckload of sh*t&quot;</span><span class="p">:</span> <span class="n">when</span> <span class="n">it</span> <span class="n">breaks</span>
+
+<span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">stupid</span> <span class="p">(</span><span class="n">but</span> <span class="n">extremely</span> <span class="n">fast</span><span class="p">)</span> <span class="n">directory</span> <span class="n">content</span> <span class="n">manager</span><span class="o">.</span>  <span class="n">It</span>  
+<span class="n">doesn</span><span class="s1">&#39;t do a whole lot, but what it _does_ do is track directory</span>
+<span class="n">contents</span> <span class="n">efficiently</span><span class="o">.</span>
+</pre></div>
+</div>
+</section>
+<section id="como-o-git-funciona">
+<h2>Como o Git funciona<a class="headerlink" href="#como-o-git-funciona" title="Permalink to this headline">#</a></h2>
+<div class="admonition-nota admonition">
+<p class="admonition-title">Nota</p>
+<p>Os comandos e termos do Git são escritos na língua inglesa. Vamos tentar traduzir os termos para facilitar o entendimento, mas deixando os termos originais em inglês devidamente registrados.</p>
+</div>
+<p>O Git armazena a história completa dos arquivos no repositório utilizando um diretório oculto <code class="docutils literal notranslate"><span class="pre">.git</span></code> situado no próprio diretório de trabalho e que é iniciado quando começamos um projeto git (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">init</span></code>).</p>
+<p>Embora pareça “custoso”, armazenar a história completa de todos os arquivos em um diretório não chega a ser um grande problema para o Git. Isso porque ele utiliza algumas funções inteligentes (como o <em>hash</em>) para armazenar apenas arquivos que foram modificados e suas diferenças (chamada de <em>diff</em>).</p>
+<p>Em resumo, cada vez que realizamos um <code class="docutils literal notranslate"><span class="pre">commit</span></code> no Git, nós tiramos uma foto do estado de todos os arquivos em nosso repositório naquele momento. É como se pudéssemos salvar não só o arquivo que estamos trabalhando (como faríamos usando o “Salvar” de uma planilha ou arquivo qualquer) mas o próprio diretório em que esta planilha está e o estado de todos os <strong>arquivos simultaneamente</strong>.</p>
+<p>Por exemplo, ao escrever este livro eu posso ter iniciado escrevendo o Capítulo 1 através de um arquivo texto um formato chamado <code class="docutils literal notranslate"><span class="pre">markdown</span></code> (equivalente a um arquivo docx do MS Word). Na primeira versão do Livro, digo ao Git para “congelar” a versão V1  que contém apenas o arquivo <code class="docutils literal notranslate"><span class="pre">Cap1.md</span></code>. Depois, adiciono um arquivo para o Capítulo 2 e mais uma vez salvo a versão do repositório Git. Como não fiz alterações no Capítulo 1, o Git apenas registra que esse arquivo não sofreu mudanças e salva uma imagem do arquivo <code class="docutils literal notranslate"><span class="pre">Cap2.md</span></code> em seu registro. Em seguida, adiciono algumas seções no Capítulo 1 e o Git altera a versão mais recente do arquivo <code class="docutils literal notranslate"><span class="pre">Cap1.md</span></code> para essa versão e registra que não houve alterações no <code class="docutils literal notranslate"><span class="pre">Cap2.md</span></code>. Porém, ao adicionar o Capítulo 3, equivocadamente deletamos os demais capítulos e salvamos o estado do repositório no Git. Neste caso, o Git vai fazer duas operações: registrar um novo arquivo <code class="docutils literal notranslate"><span class="pre">Cap3.md</span></code> e registrar que os outros arquivos foram excluídos da imagem mais recente do repositório. No entanto, como o Git armazena a <strong>históra completa</strong> dos arquivos, conseguimos prontamente restaurar os demais capítulos na Versão 5 do repositório, sem sofrer nenhuma perda no trabalho. Um ponto importante é que o nome dos arquivos não se altera, as versões apontadas entre parênteses na Figura abaixo serve apenas para indicar a versão do arquivo que o Git está apontando.</p>
+<figure class="align-default" id="id1">
+<img alt="../../../_images/git_versoes.png" src="../../../_images/git_versoes.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">Versões do Git</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Na prática, o Git permite um versionamento ainda mais flexível através do uso de <code class="docutils literal notranslate"><span class="pre">branches</span></code> (“galhos”) e outras funcinalidades que veremos na sequência. Ainda assim, em geral, não será necessário entendermos a fundo o funcionamento do Git mas somente suas funções principais.</p>
+<div class="admonition-importante admonition">
+<p class="admonition-title">Importante</p>
+<p>Se para arquivos de código o tamanho de armazenamento em geral não é importante, o mesmo não é verdade quando trabalhamos com dados em um repositório Git. Por isso, <strong>não é recomendado armazenar dados</strong> em um sistema de controle de versão. Devemos utilizar sistemas de armazenamento apropriados para isso como um armazenamento na nuvem.</p>
+</div>
+</section>
+<section id="os-tres-estados-do-git">
+<h2>Os três Estados do Git<a class="headerlink" href="#os-tres-estados-do-git" title="Permalink to this headline">#</a></h2>
+<p>Antes de entrarmos na prática do Git, precisamos clarificar um ponto que ajudará no entendimento e na resolução de problemas no Git (acredite, todo desenvolvedor tem ou terá problemas com Git em algum momento).</p>
+<p>Quando trabalhamos em um repositório Git, cada arquivo pode estar em três estados principais distintos:</p>
+<ul class="simple">
+<li><p><em>commited</em> (“registrado”): significa que o arquivo está registrado na história do Git com a mesma versão que a disponível atualmente no repositório.</p></li>
+<li><p><em>modified</em> (modificado): quando o arquivo foi modificado e está diferente da última versão registrada no Git. No entanto, as alterações ainda não foram preparadas (<em>staged</em>) e portanto o Git não sabe se deve ou não registrá-las em uma novo <em>commit</em>.</p></li>
+<li><p><em>staged</em> (preparado): significa que você indicou ao Git que o arquivo deve ser adicionado na próxima versão (<em>commit</em>). É um passo intermediário antes de salvar uma nova imagem do diretório.</p></li>
+</ul>
+<figure class="align-default" id="id2">
+<img alt="../../../_images/git_estados.png" src="../../../_images/git_estados.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Diretório de trabalho, área de preparo (índice), e o diretório Git. Adaptado de [fonte]([Diretório de trabalho, área de preparo, e o diretório Git. <a class="reference external" href="https://git-scm.com/book/pt-br/v2/Come%C3%A7ando-O-B%C3%A1sico-do-Git">Fonte:</a>)</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Quando acessamos uma versão do projeto ou clonamos um repositório remoto, nosso diretório de trabalho será uma cópia do repositório. A partir do momento que modificarmos um arquivo ou adicionarmos um novo arquivo, nosso diretório de trabalho passa a estar em um estado distinto do repositório original.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters/06/03"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../02/boas_praticas_dev.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">6.2 Boas práticas de desenvolvimento</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../04/git_pratica.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">6.4 Git na prática</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Daniel Paulon Avancini<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

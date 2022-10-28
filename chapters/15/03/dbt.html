@@ -1,0 +1,1683 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>15.3 Transformação de dados com dbt &#8212; Engenharia de Analytics</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://www.engdeanalytics.com.br/chapters/15/03/dbt.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="15.2 Alternativas de Arquitetura de ETL/ELT" href="../02/arquiteturas_transformacao.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XDLZWNXBSG"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-XDLZWNXBSG');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/logo_livro.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Engenharia de Analytics</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Engenharia de Analytics
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Fundamentos
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../01/intro.html">
+   Capítulo 1 - Introdução
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/01/por_que_analytics.html">
+     1.1 Por quê Engenharia de Analytics?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/02/carreiras_atuais.html">
+     1.2 Redefinindo equipes de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/03/responsabilidades.html">
+     1.3 As responsabilidades do Engenheiro de Analytics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/04/northwind.html">
+     1.4 Estudo de caso: Northwind Traders
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/05/para_quem.html">
+     1.5 Para quem é este livro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/06/como_organizado.html">
+     1.6 Como este livro está organizado
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../01/leia_mais.html">
+     1.7 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../02/intro.html">
+   Capítulo 2 - Fundamentos de Analytics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/01/5_vs.html">
+     2.1 Os 5 Vs do big data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/02/volume.html">
+     2.2 Volume
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/03/velocidade.html">
+     2.3 Velocidade
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/04/variedade.html">
+     2.4 Variedade
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/05/veracidade.html">
+     2.5 Veracidade
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/06/valor.html">
+     2.6 Valor
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../02/leia_mais.html">
+     2.7 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../03/intro.html">
+   Capítulo 3 - Pensando de forma analítica
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/01/pensamento_analitico.html">
+     3.1 O pensamento analítico
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/02/tecnicas_problemas.html">
+     3.2 Técnicas para resolução de problemas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/03/pareto.html">
+     3.3 Diagrama de Pareto
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/04/5_porques.html">
+     3.4 Os 5 porquês
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../03/leia_mais.html">
+     3.5 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../04/intro.html">
+   Capítulo 4 - Bancos de dados
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/01/tipos_de_bd.html">
+     4.1 Tipos de Bancos de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/02/tipos_de_dados.html">
+     4.2 Tipos de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/03/modelo_relacional.html">
+     4.3 Modelo Relacional
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/04/indices.html">
+     4.4 Trabalhando com índices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/05/modelagem_bd.html">
+     4.5 Modelagem de Banco de Dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/06/normalizacao.html">
+     4.6 ER e Normalização de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/07/dimensional.html">
+     4.7 O modelo dimensional e o esquema estrela
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/08/outros_modelos.html">
+     4.8 Outras classificações de modelagem de bancos de dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/09/planilhas_bd.html">
+     4.9 Planilhas vs Bancos de Dados SQL: Quais as diferenças?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../04/leia_mais.html">
+     4.10 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../05/intro.html">
+   Capítulo 5 - SQL para Análise de Dados
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/01/select.html">
+     5.1 Consultando dados com SELECT, WHERE e ORDER BY
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/02/join.html">
+     5.2 Juntando dados com JOIN e UNION
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/03/agregadas.html">
+     5.3 Funções Agregadas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/04/group_by.html">
+     5.4 Trabalhando com agrupamentos GROUP BY
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/05/case_when.html">
+     5.5 Lógica condicional com  CASE WHEN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/06/sub.html">
+     5.6 Subqueries e CTE
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../05/leia_mais.html">
+     Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../06/intro.html">
+   Capítulo 6 -  Boas práticas de desenvolvimento
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/01/boas_praticas_prog.html">
+     6.1 Boas práticas de programação
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/02/boas_praticas_dev.html">
+     6.2 Boas práticas de desenvolvimento
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/03/intro_git.html">
+     6.3 Introdução ao controle de Versão e Git
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/04/git_pratica.html">
+     6.4 Git na prática
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../06/leia_mais.html">
+     6.4 Leia mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../07/intro.html">
+   Capítulo 7 -  O Modern Data Stack
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Modelando Dados
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../08/intro.html">
+   Capítulo 8 - Data Warehouses
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/01/papel_mas_dw.html">
+     8.1 O papel do Data Warehouse no Modern Data Stack
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/02/modelagem_dimensional.html">
+     8.2 O Modelo dimensional
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/03/esquema_estrela.html">
+     8.3 O esquema estrela
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../08/leia_mais.html">
+     8.4 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../09/intro.html">
+   Capítulo 9 - Fatos
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../09/01/medidas.html">
+     9.1 Tipos de Medidas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../09/02/tipos_fato.html">
+     9.2 Tipos de Tabelas Fato
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../09/leia_mais.html">
+     9.3 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../10/intro.html">
+   Capítulo 10 - Dimensões
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/01/chaves.html">
+     10.1 Tipo de Chaves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/02/scd.html">
+     10.2 Dimensão de Alteração Lenta  (SCD)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/03/degeneradas.html">
+     10.3 Dimensões degeneradas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/04/junk.html">
+     7.4 Dimensões Junk
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../10/leia_mais.html">
+     10.4 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../11/intro.html">
+   Capítulo 11 -  Modelando um Data Warehouse
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/01/etapas.html">
+     11.1 Etapas de Modelagem do DW
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/02/planejando_marts.html">
+     11.2 Planejando os Data Marts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/03/planejando_dimensoes.html">
+     11.3 Planejando as dimensões
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/04/criando_modelos.html">
+     11.4 Criando os modelos conceituais
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/05/mapeamento_chaves.html">
+     11.5 Mapeamento de Chaves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/06/tabela_fato.html">
+     11.6 Modelando a Tabela Fato
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/07/agregadas_derivadas.html">
+     11.7 Tabelas Agregadas e Derivadas
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../11/leia_mais.html">
+     11.8 Leia Mais
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../12/intro.html">
+   Capítulo 12 -  Configurando um Data Warehouse com Big Query
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Transformando dados
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../13/intro.html">
+   Capítulo 13 -  Introdução ao ELT
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../13/01/etl.html">
+     13.1 O Precursor: ETL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../13/02/elt.html">
+     13.2 O ELT
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../13/03/processo_elt.html">
+     13.3 O Processo de ELT
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../14/intro.html">
+   Capítulo 14 -  Ingestão de dados
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../14/01/acessando_dados.html">
+     14.1 Acessando dados
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../14/02/tipos_de_ingestao.html">
+     14.2 Tipos de Ingestão
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../14/03/exemplo_pratico.html">
+     14.3 Ingestão de dados na prática
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../intro.html">
+   Capítulo 15 -  Transformação de dados
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+  <label for="toctree-checkbox-13">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/processos_transformacao.html">
+     15.1 Os Processos de Transformação
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/arquiteturas_transformacao.html">
+     15.2 Alternativas de Arquitetura de ETL/ELT
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     15.3 Transformação de dados com dbt
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/dpavancini/eng-de-analytics-livro"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/dpavancini/eng-de-analytics-livro/issues/new?title=Issue%20on%20page%20%2Fchapters/15/03/dbt.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../../_sources/chapters/15/03/dbt.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#comecando-um-projeto">
+   Começando um projeto
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#instrucoes-de-exemplo">
+     Instruções de exemplo
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#criando-um-projeto-dbt">
+     Criando um projeto dbt
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#configurando-a-conexao-com-o-data-warehouse">
+     Configurando a conexão com o Data Warehouse
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#salvando-nossas-alteracoes">
+   Salvando nossas alterações
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#criando-nossos-primeiros-modelos">
+   Criando nossos primeiros modelos
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#comecando-uma-nova-branch">
+     Começando uma nova
+     <em>
+      branch
+     </em>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#criando-nossas-primeiras-fontes-de-dados">
+     Criando nossas primeiras fontes de dados
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Criando nossos primeiros modelos
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rodando-o-pipeline">
+   Rodando o pipeline
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#escrevendo-testes">
+   Escrevendo testes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#documentando-o-modelo-de-dados-e-visualizando-as-dependencias">
+   Documentando o modelo de dados e visualizando as dependências
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#orquestracao">
+   Orquestração
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusao">
+   Conclusão
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>15.3 Transformação de dados com dbt</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#comecando-um-projeto">
+   Começando um projeto
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#instrucoes-de-exemplo">
+     Instruções de exemplo
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#criando-um-projeto-dbt">
+     Criando um projeto dbt
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#configurando-a-conexao-com-o-data-warehouse">
+     Configurando a conexão com o Data Warehouse
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#salvando-nossas-alteracoes">
+   Salvando nossas alterações
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#criando-nossos-primeiros-modelos">
+   Criando nossos primeiros modelos
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#comecando-uma-nova-branch">
+     Começando uma nova
+     <em>
+      branch
+     </em>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#criando-nossas-primeiras-fontes-de-dados">
+     Criando nossas primeiras fontes de dados
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Criando nossos primeiros modelos
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rodando-o-pipeline">
+   Rodando o pipeline
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#escrevendo-testes">
+   Escrevendo testes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#documentando-o-modelo-de-dados-e-visualizando-as-dependencias">
+   Documentando o modelo de dados e visualizando as dependências
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#orquestracao">
+   Orquestração
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusao">
+   Conclusão
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="transformacao-de-dados-com-dbt">
+<span id="dbt"></span><h1>15.3 Transformação de dados com dbt<a class="headerlink" href="#transformacao-de-dados-com-dbt" title="Permalink to this headline">#</a></h1>
+<p>Nesta seção vamos apresentar como fazer a modelagem de um DW na prática usando o dbt. Para tanto, nós precisamos primeiro realizar a carga dos dados brutos em nosso DW <span class="xref myst">(que fizemos na seção anterior)</span>. Com os dados já inseridos no DW, vamos criar uma séries de modelos para materializar o modelo conceitual do DW que criamos <span class="xref myst">anteriormente</span>.</p>
+<p>Antes de começar a parte técnica, é bom lembrar que o objetivo de um DW é gerar resultado para a empresa e não criar um sistema que, embora possa ser tecnicamente bem feito, não tenha uma visão de negócio. Deste modo, a forma como criamos os marts e suas tabelas fato e dimensões deve ser sempre pensado nos problemas prioritários na tomada de decisão e na utilização pelo usuário final. Um erro comum de projetos de DW é pensar mais nos modelos de dados das aplicações-fonte e menos no modelo de negócios do usuário final. Se for difícil saber <em>a priori</em> como será essa utilização, podemos recorrer a instrumentos já usados na tomada de decisão como relatórios, planilhas, etc. para ter uma ideia de que tipo de relações e atributos são mais relevantes para o cliente.</p>
+<p>Atualmente o <a class="reference external" href="https://www.getdbt.com/">dbt</a> possui uma versão SaaS chamada <a class="reference external" href="https://www.getdbt.com/product/what-is-dbt/">dbt cloud</a> além da versão open-source. A versão SaaS possui um custo de aprendizagem menor para quem tem menos contato com programação, mas neste curso vamos utilizar a versão open-source. No geral, ambos são muito similares e você utilizar a versão cloud de forma equivalente se desejar.</p>
+<div class="admonition-dica admonition">
+<p class="admonition-title">Dica!</p>
+<p>Para lembrar os comandos do dbt facilmente utilize essa <a class="reference external" href="https://medium.com/indiciumtech/17-dbt-commands-you-should-start-using-today-581998dbf8f0">cheatsheet</a></p>
+</div>
+<section id="comecando-um-projeto">
+<h2>Começando um projeto<a class="headerlink" href="#comecando-um-projeto" title="Permalink to this headline">#</a></h2>
+<p>Nesta subseção vamos aprender como iniciar um projeto dbt. Vamos lá?</p>
+<section id="instrucoes-de-exemplo">
+<h3>Instruções de exemplo<a class="headerlink" href="#instrucoes-de-exemplo" title="Permalink to this headline">#</a></h3>
+<p>A forma mais fácil de acompanhar esta seção é clonar o projeto de exemplo disponível neste <a class="reference external" href="https://github.com/engdeanalytics/northwind">repositório</a>. Siga as instruções no README do repositório para instalar e configurar o dbt corretamente no seu computador.</p>
+</section>
+<section id="criando-um-projeto-dbt">
+<h3>Criando um projeto dbt<a class="headerlink" href="#criando-um-projeto-dbt" title="Permalink to this headline">#</a></h3>
+<p>O primeiro passo de um projeto dbt é a criação da pasta onde estão estruturados os arquivos do projeto. A forma mais fácil de criar essa pasta é através do comando <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">init</span></code>. Você também vai precisar criar um repositório git na pasta para controlar o versionamento do projeto. Todo projeto é iniciado com um arquivo <code class="docutils literal notranslate"><span class="pre">dbt_project.yml</span></code> padrão, neste arquivo são configurados diversas opções do projeto incluindo a conexão com o data warehouse, tipo de materialização das tabelas, entre outros.</p>
+<div class="admonition-atencao admonition">
+<p class="admonition-title">Atenção!</p>
+<p>Se você clonou o repositório de exemplo, as etapas dessa subseção já terão sido feitas para você.</p>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;northwind&#39;</span><span class="w"></span>
+<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1.0.0&#39;</span><span class="w"></span>
+<span class="nt">config-version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+
+<span class="nt">profile</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;northwind&#39;</span><span class="w"></span>
+
+<span class="nt">model-paths</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;models&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="nt">analysis-paths</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;analyses&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="nt">test-paths</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;tests&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="nt">seed-paths</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;seeds&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="nt">macro-paths</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;macros&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="nt">snapshot-paths</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;snapshots&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+
+<span class="nt">target-path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;target&quot;</span><span class="w">  </span><span class="c1"># directory which will store compiled SQL files</span><span class="w"></span>
+<span class="nt">clean-targets</span><span class="p">:</span><span class="w">         </span><span class="c1"># directories to be removed by `dbt clean`</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;target&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;dbt_packages&quot;</span><span class="w"></span>
+
+<span class="nt">models</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">northwind</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">staging</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">+materialized</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">table</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>Exemplo de dbt_project.yml</strong></p>
+<p>O <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">init</span></code> também cria uma estrutura de pastas e arquivos padrão para todo projeto dbt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
+├── analyses
+├── dbt_packages
+├── dbt_project.yml
+├── logs
+├── macros
+├── models
+├── README.md
+├── seeds
+├── snapshots
+├── target
+└── tests
+
+9 directories, 2 files
+</pre></div>
+</div>
+</section>
+<section id="configurando-a-conexao-com-o-data-warehouse">
+<h3>Configurando a conexão com o Data Warehouse<a class="headerlink" href="#configurando-a-conexao-com-o-data-warehouse" title="Permalink to this headline">#</a></h3>
+<p>A conexão com o data warehouse é configurada por padrão no arquivo <code class="docutils literal notranslate"><span class="pre">profiles.yml</span></code> que fica armazenado no caminho <code class="docutils literal notranslate"><span class="pre">~/.dbt/profiles.yml</span></code> (LINUX). As permissões do arquivo devem ser restritas ao usuário pois possuem credenciais de acesso aos dados que não devem ser compartilhadas.</p>
+<p>A opção target permite alterar entre um ambiente de desenvolvimento e produção de forma simples. O target de produção deve se chamar “prod” pois é usado em outros APIs do dbt. Durante o desenvolvimento, esse target não deve ser usado mas sim um target “dev” ou equivalente.</p>
+<p>Atualmente o dbt possui drivers para os principais data warehouses na nuvem e alguns bancos de dados tradicionais, cada driver possui configurações específicas que podem ser consultadas <a class="reference external" href="https://docs.getdbt.com/docs/available-adapters">aqui</a>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">northwind</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">outputs</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">dev</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">dataset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">northwind</span><span class="w"></span>
+<span class="w">      </span><span class="nt">job_execution_timeout_seconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span><span class="w"></span>
+<span class="w">      </span><span class="nt">job_retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">keyfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">path/to/keyfile.json</span><span class="w"></span>
+<span class="w">      </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">US</span><span class="w"></span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">service-account</span><span class="w"></span>
+<span class="w">      </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">interactive</span><span class="w"></span>
+<span class="w">      </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;project_id&gt;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">threads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bigquery</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>Exemplo de dbt Profile</strong></p>
+<p>Para verificar se tudo está bem configurado, podemos usar o comando <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">debug</span></code> no terminal. Em caso de sucesso, devemos ter um output como esse:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt debug
+
+<span class="o">(</span>...<span class="o">)</span>
+  Connection test: <span class="o">[</span>OK connection ok<span class="o">]</span>
+
+All checks passed!
+</pre></div>
+</div>
+</section>
+</section>
+<section id="salvando-nossas-alteracoes">
+<h2>Salvando nossas alterações<a class="headerlink" href="#salvando-nossas-alteracoes" title="Permalink to this headline">#</a></h2>
+<p>É importante salvar frequentemente nossas alterações no projeto. Por ser um projeto de código (lembrem-se do princípio de <em>data as code</em>), as alterações são salvas como <em>commits</em> em um sistema de controle de versão git.</p>
+<div class="admonition-importante admonition">
+<p class="admonition-title">Importante!</p>
+<p>Se você não tem contato com git, recomendamos revisar o capítulo sobre <a class="reference internal" href="../../06/03/intro_git.html#git"><span class="std std-ref">Git</span></a> ou buscar outros conteúdos <em>online</em>.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git init
+git branch -M main
+git add .
+git commit -m <span class="s2">&quot;Criei um projeto dbt&quot;</span>
+git remote add origin https://github.com/USERNAME/dbt-northwind.git
+git push -u origin main
+</pre></div>
+</div>
+</section>
+<section id="criando-nossos-primeiros-modelos">
+<h2>Criando nossos primeiros modelos<a class="headerlink" href="#criando-nossos-primeiros-modelos" title="Permalink to this headline">#</a></h2>
+<p>Agora que temos o ambiente configurado podemos trabalhar na construção dos modelos dbt. Cada modelo se tornará um objeto no <em>data warehouse</em> seguindo nosso planejamento do ELT.</p>
+<section id="comecando-uma-nova-branch">
+<h3>Começando uma nova <em>branch</em><a class="headerlink" href="#comecando-uma-nova-branch" title="Permalink to this headline">#</a></h3>
+<p>Antes de iniciar nossa construção dos modelos, é recomendável criar uma nova <em>branch</em> de trabalho para salvarmos nossas alterações. Para isso podemos executar no terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">checkout</span> <span class="o">-</span><span class="n">b</span> <span class="n">novos_modelos_dbt</span>
+</pre></div>
+</div>
+</section>
+<section id="criando-nossas-primeiras-fontes-de-dados">
+<h3>Criando nossas primeiras fontes de dados<a class="headerlink" href="#criando-nossas-primeiras-fontes-de-dados" title="Permalink to this headline">#</a></h3>
+<p>Agora que configuramos nossa conexão com o data warehouse, precisamos criar nossas primeiras fontes de dados. Essas fontes são definidas no arquivo <code class="docutils literal notranslate"><span class="pre">sources.yml</span></code>, onde é possível descrever quais os bancos de dados, schemas e tabelas que queremos deixar disponíveis no dbt.</p>
+<div class="admonition-atencao admonition">
+<p class="admonition-title">Atenção!</p>
+<p>Nesta seção é esperado que os dados brutos da Northwind já estejam disponíveis no Data Warehouse através de um processo de ingestão como visto <a class="reference internal" href="../../14/03/exemplo_pratico.html#ingestao-pratica"><span class="std std-ref">aqui</span></a> ou através de um dbt seed como sugerido <a class="reference external" href="https://github.com/engdeanalytics/northwind">aqui</a>.</p>
+</div>
+<p>Depois de definidas as fontes, elas podem ser chamadas nos modelos através da sintaxe:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span>select * 
+from {{source(&#39;nome_fonte&#39;, &#39;nome_tabela&#39;)}}
+</pre></div>
+</div>
+<p>Não é necessário mapear todas as tabelas do data warehouse de uma vez, mas podemos adicionar de forma incremental o que for necessário para os modelos. O uso do arquivo de sources permite criar a linhagem dos dados através da função <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">source('nome_da_fonte',’nome_da_tabela’)}}</span></code> e também permite documentar e escrever testes sobre as fontes de dados.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+
+<span class="nt">sources</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">northwind</span><span class="w"> </span><span class="c1"># aqui você deve substituir pelo nome do dataset criado pela ferramenta de ingestão no bigquery</span><span class="w"></span>
+<span class="w">    </span><span class="nt">schema</span><span class="p">:</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Essa é a fonte de dados do nosso ERP</span><span class="w"></span>
+<span class="w">    </span><span class="nt">tables</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">products</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Essa é a tabela de produtos do ERP.</span><span class="w"></span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">employees</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Essa é a tabela de funcionários do ERP.</span><span class="w"></span>
+<span class="w">        </span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">customers</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Essa é a tabela de clientes do ERP. O dono desse dado é a equipe comercial.</span><span class="w"></span>
+<span class="w"> </span>
+</pre></div>
+</div>
+<p>Uma boa prática é incluir o arquivo <code class="docutils literal notranslate"><span class="pre">sources.yml</span></code> no diretório <em>staging</em> onde fazemos as primeiras transformações sobre os dados originais. Em geral, <strong>cada source deve ser referenciada apenas em um modelo</strong>, facilitando a consistência na modelagem como iremos discutir na próxima seção.</p>
+</section>
+<section id="id1">
+<h3>Criando nossos primeiros modelos<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p>Um modelo em dbt é um arquivo <code class="docutils literal notranslate"><span class="pre">.sql</span></code> que tem como input uma tabela fonte do banco de dados ou um outro modelo do dbt. Por padrão, o dbt irá criar um objeto no banco de dados com o mesmo nome do arquivo e com o tipo de materialização escolhida (tabela, visualização, etc). Ao utilizar corretamente a interface do dbt, conseguimos garantir a linhagem dos dados, isto é, a ordem correta com que cada script sql deve ser executada no banco de dados. Embora seja possível escrever um modelo .sql que referencia diretamente uma tabela do banco de dados, essa prática deve ser evitada. As duas interfaces principais de um modelo são as funções <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">source('nome_da_fonte',’nome_da_tabela’)}}</span></code> e <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">ref(‘nome_do_modelo’)</span> <span class="pre">}}</span></code> A primeira indica ao dbt que aquele modelo utiliza dados da tabela fonte do banco de dados que não depende de outros modelos, e a segunda indica que a fonte dos dados é um outro modelo que pode ou não existir no banco de dados inicialmente e deve ser processado na sequência correta.</p>
+<figure class="align-default" id="fluxo-dbt">
+<img alt="../../../_images/fluxo_dbt.png" src="../../../_images/fluxo_dbt.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 54 </span><span class="caption-text">Exemplo de dependências no dbt</span><a class="headerlink" href="#fluxo-dbt" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Nos modelos <em>staging</em> (abreviados com o prefixo stg) importamos as <em>sources</em> e aplicamos transformações simples para “limpar” os dados da origem e adequar a nosso modelo de dados:</p>
+<ul class="simple">
+<li><p>Renomear colunas</p></li>
+<li><p>Alterar tipos de dados</p></li>
+<li><p>Criar novas colunas dependentes (concatenar, separar, etc)</p></li>
+</ul>
+<p>Em nosso primeiro modelo vamos ler a tabela <em>customers</em> da fonte northwind e criar uma versão <em>staging</em> em nosso DW. Neste momento é interessante verificar as colunas e tipos que foram criados durante a ingestão através de uma ferramenta de consulta SQL. A partir do <em>data model</em>, podemos copiar e colar as colunas em uma CTE em nosso modelo e realizar as transformações necessárias.</p>
+<div class="admonition-atencao admonition">
+<p class="admonition-title">Atenção.</p>
+<p>Você pode notar que os modelos dim_products e stg_products já estão disponíveis no repositório de exemplo. Use-os como referência para construir os demais modelos.</p>
+</div>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span>with
+    source_data as (
+        select
+            country
+            , city
+            , fax
+            , postal_code
+            , address
+            , region
+            , customer_id
+            , contact_name
+            , phone
+            , company_name
+            , contact_title
+        from {{source(&#39;northwind&#39;,&#39;customers&#39;)}}
+)
+
+select *
+from source_data
+</pre></div>
+</div>
+<!-- Adicionar alguma transformação -->
+<p>Ao explorar melhor as chaves e o modelo conceitual do DW, identificamos as seguintes relações no nosso mart de orders:</p>
+<figure class="align-default" id="modelo-conceitual-northwind">
+<a class="reference internal image-reference" href="../../../_images/modelo_conceitual_northwind.png"><img alt="../../../_images/modelo_conceitual_northwind.png" src="../../../_images/modelo_conceitual_northwind.png" style="height: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 55 </span><span class="caption-text">Modelo conceitual da Northwind</span><a class="headerlink" href="#modelo-conceitual-northwind" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Para facilitar nosso entendimento, também criamos um modelo conceitual com o mapeamento das relações. Na prática, podemos fazer isso diretamente no código e depois deixar o próprio dbt gerar esse diagrama para nós:</p>
+<figure class="align-default" id="modelo-dimensional-northwind">
+<a class="reference internal image-reference" href="../../../_images/modelo_dimensional_nw.png"><img alt="../../../_images/modelo_dimensional_nw.png" src="../../../_images/modelo_dimensional_nw.png" style="height: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 56 </span><span class="caption-text">Modelo dimensional da Northwind</span><a class="headerlink" href="#modelo-dimensional-northwind" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>A partir deste diagrama podemos definir uma sequência de tarefas que precisamos para modelar nosso data mart antes de rodar o pipeline:</p>
+<ol class="simple">
+<li><p>Incluir todas as tabelas necessárias no arquivo sources.yml</p></li>
+<li><p>Criar os modelos staging necessários</p></li>
+<li><p>Criar as tabelas dimensão e chaves surrogates</p></li>
+<li><p>Criar a tabela fato</p></li>
+</ol>
+<p>A estrutura final do nosso projeto ficaria mais ou menos assim:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── marts
+│   ├── dim_customers.sql
+│   ├── dim_customers.yml
+│   ├── dim_employees.sql
+│   ├── dim_products.sql
+│   ├── dim_products.yml
+│   ├── dim_shippers.sql
+│   ├── dim_suppliers.sql
+│   ├── fct_order_detail.sql
+│   └── fct_order_detail.yml
+└── staging
+    ├── sources.yml
+    ├── stg_customers.sql
+    ├── stg_employees.sql
+    ├── stg_order_detail.sql
+    ├── stg_orders.sql
+    ├── stg_products.sql
+    ├── stg_shippers.sql
+    └── stg_suppliers.sql
+</pre></div>
+</div>
+<p>Vamos omitir as etapas 1 e 2 e partir diretamente para a etapa 3: Criar as tabelas dimensão e chaves surrogates.  Vamos iniciar pela tabela de clientes (<em>customers</em>) e criar uma chave surrogate auto-incremental a partir da chave de negócio <code class="docutils literal notranslate"><span class="pre">customer_id</span></code>:</p>
+<div class="admonition-importante admonition">
+<p class="admonition-title">Importante!</p>
+<p>As chaves auto-incrementais são muito utilizadas em bancos de dados e de fácil entendimento pelos consumidores dos dados. No entanto, em <em>data warehouses</em> modernos elas podem ser perigosas. Por quê?</p>
+</div>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span>with 
+    staging as (
+        select *
+        from {{ref(&#39;stg_customers&#39;)}}
+)
+    , transformed as (
+        select
+            row_number() over (order by customer_id) as customer_sk -- auto-incremental surrogate key
+            , customer_id
+            , country
+            , city
+            , fax
+            , postal_code   
+            , address
+            , region
+            , contact_name
+            , phone
+            , company_name
+            , contact_title
+        from staging
+)
+
+select *  from transformed
+</pre></div>
+</div>
+<p>Depois de criadas as tabelas dimensão, mudamos nossa atenção para a tabela fato. Iniciamos pela tabela de capa do pedido (<em>orders</em>) e suas dimensões <code class="docutils literal notranslate"><span class="pre">dim_shippers</span></code>, <code class="docutils literal notranslate"><span class="pre">dim_customers</span></code> e <code class="docutils literal notranslate"><span class="pre">dim_employees</span></code>. A ideia é criar uma tabela fato apenas com as chaves estrangeiras porém logo vemos que algumas colunas da tabela de pedidos não são medidas mas crescem proporcionalmente à tabela fato (informações de entrega, Código do Pedido, etc). Deste modo, resolvemos deixar essas informações na tabela fato como dimensões degeneradas.</p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span>with customers as (
+   select
+     customer_sk
+   , customer_id
+   FROM {{ref(&#39;dim_customers&#39;)}}   
+),
+ 
+employees as (
+   select
+     employee_sk
+   , employee_id
+   FROM {{ref(&#39;dim_employees&#39;)}}   
+),
+ 
+suppliers as (
+   select
+     supplier_sk
+   , supplier_id
+   FROM {{ref(&#39;dim_suppliers&#39;)}}   
+),
+ 
+shippers as (
+   select
+     shipper_sk
+   , shipper_id
+   FROM {{ref(&#39;dim_shippers&#39;)}}   
+),
+ 
+products as (
+   select
+     product_sk
+   , product_id
+   FROM {{ref(&#39;dim_products&#39;)}}   
+),
+ 
+orders_with_sk as (
+   select
+     orders.order_id
+   , employees.employee_sk as employee_fk
+   , customers.customer_sk as customer_fk
+   , shippers.shipper_sk as shipper_fk
+   , orders.order_date
+   , orders.ship_region
+   , orders.shipped_date
+   , orders.ship_country
+   , orders.ship_name
+   , orders.ship_postal_code
+   , orders.ship_city
+   , orders.freight
+   , orders.ship_address
+   , orders.required_date
+   from {{ref(&#39;stg_orders&#39;)}} orders
+   LEFT JOIN employees employees ON orders.employee_id = employees.employee_id
+   LEFT JOIN customers customers ON orders.customer_id = customers.customer_id
+   LEFT JOIN shippers shippers ON orders.shipper_id = shippers.shipper_sk
+)
+ 
+select * from orders_with_sk
+</pre></div>
+</div>
+<p>Ocorre que não queremos apenas a capa dos pedidos mas também o detalhamento desses pedidos na tabela fato, ou seja, queremos que o grão da tabela seja cada item do pedido de modo que possamos somar um total ou média de pedidos por produto/cliente sem recorrer a outras operações de JOIN. Como já vimos no capítulo anterior, a melhor opção é juntar a capa do pedido (orders) e o detalhe do pedido (order_details) na mesma tabela fato, ainda que essa arquitetura não seja tão eficiente em termos de armazenamento:</p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span><span class="p">(...)</span><span class="w"></span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="k">final</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="k">select</span><span class="w"></span>
+<span class="w">        </span><span class="n">order_dtl</span><span class="p">.</span><span class="n">order_id</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">employee_fk</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">customer_fk</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">shipper_fk</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">order_date</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">ship_region</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">shipped_date</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">ship_country</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">ship_name</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">ship_postal_code</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">ship_city</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">freight</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">ship_address</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">required_date</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">order_dtl</span><span class="p">.</span><span class="n">product_fk</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">order_dtl</span><span class="p">.</span><span class="n">discount</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">order_dtl</span><span class="p">.</span><span class="n">unit_price</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">order_dtl</span><span class="p">.</span><span class="n">quantity</span><span class="w"></span>
+<span class="w">        </span><span class="k">from</span><span class="w"> </span><span class="n">orders_with_sk</span><span class="w"> </span><span class="n">orders</span><span class="w"></span>
+<span class="w">        </span><span class="k">left</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="n">orders_detail_with_sk</span><span class="w"> </span><span class="n">order_dtl</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">orders</span><span class="p">.</span><span class="n">order_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">order_dtl</span><span class="p">.</span><span class="n">order_id</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"></span>
+
+<span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">final</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="rodando-o-pipeline">
+<h2>Rodando o pipeline<a class="headerlink" href="#rodando-o-pipeline" title="Permalink to this headline">#</a></h2>
+<p>Falamos sobre como criar os modelos .sql do dbt mas não como eles são materializados de fato, ou seja, se tornam tabelas, visualizações etc. Este processo é realizado através do comando  <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">run</span></code> ou <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">build</span></code>, que processa as dependências entre os modelos geradas a partir das macros <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">ref()</span> <span class="pre">}}</span></code> e <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">source()}}</span></code> e executa cada script na sua sequência correta:</p>
+<div class="admonition-para-saber-mais admonition">
+<p class="admonition-title">Para saber mais.</p>
+<p>Leia a documentação oficial do dbt e entenda a diferença entre o <em>dbt run</em> e <em>dbt build</em>.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ dbt run
+
+<span class="m">00</span>:01:47  Running with <span class="nv">dbt</span><span class="o">=</span><span class="m">1</span>.3.0
+<span class="m">00</span>:01:47  Found <span class="m">2</span> models, <span class="m">5</span> tests, <span class="m">0</span> snapshots, <span class="m">0</span> analyses, <span class="m">319</span> macros, <span class="m">0</span> operations, <span class="m">14</span> seed files, <span class="m">7</span> sources, <span class="m">0</span> exposures, <span class="m">0</span> metrics
+<span class="m">00</span>:01:47  
+<span class="m">00</span>:01:48  Concurrency: <span class="m">1</span> threads <span class="o">(</span><span class="nv">target</span><span class="o">=</span><span class="s1">&#39;dev&#39;</span><span class="o">)</span>
+<span class="m">00</span>:01:48  
+<span class="m">00</span>:01:48  <span class="m">1</span> of <span class="m">2</span> START sql table model northwind.stg_products ............................ <span class="o">[</span>RUN<span class="o">]</span>
+<span class="m">00</span>:01:51  <span class="m">1</span> of <span class="m">2</span> OK created sql table model northwind.stg_products ....................... <span class="o">[</span>CREATE TABLE <span class="o">(</span><span class="m">77</span>.0 rows, <span class="m">7</span>.5 KB processed<span class="o">)</span> <span class="k">in</span> <span class="m">3</span>.34s<span class="o">]</span>
+<span class="m">00</span>:01:51  <span class="m">2</span> of <span class="m">2</span> START sql view model northwind.dim_products ............................. <span class="o">[</span>RUN<span class="o">]</span>
+<span class="m">00</span>:01:53  <span class="m">2</span> of <span class="m">2</span> OK created sql view model northwind.dim_products ........................ <span class="o">[</span>CREATE VIEW <span class="o">(</span><span class="m">0</span> processed<span class="o">)</span> <span class="k">in</span> <span class="m">1</span>.20s<span class="o">]</span>
+<span class="m">00</span>:01:53  
+<span class="m">00</span>:01:53  Finished running <span class="m">1</span> table model, <span class="m">1</span> view model <span class="k">in</span> <span class="m">0</span> hours <span class="m">0</span> minutes and <span class="m">5</span>.38 seconds <span class="o">(</span><span class="m">5</span>.38s<span class="o">)</span>.
+<span class="m">00</span>:01:53  
+<span class="m">00</span>:01:53  Completed successfully
+<span class="m">00</span>:01:53  
+<span class="m">00</span>:01:53  Done. <span class="nv">PASS</span><span class="o">=</span><span class="m">2</span> <span class="nv">WARN</span><span class="o">=</span><span class="m">0</span> <span class="nv">ERROR</span><span class="o">=</span><span class="m">0</span> <span class="nv">SKIP</span><span class="o">=</span><span class="m">0</span> <span class="nv">TOTAL</span><span class="o">=</span><span class="m">2</span>
+</pre></div>
+</div>
+<p>Podemos notar no output do dbt run que o dbt nos informa o tipo de materialização de cada modelo. Mas como configuramos isso? Há duas formas: através de uma configuração em cada modelo ou de forma mais geral no <code class="docutils literal notranslate"><span class="pre">dbt_project</span></code>. No primeiro exemplo abaixo, podemos dizer para o dbt materializar o modelo <code class="docutils literal notranslate"><span class="pre">fct_order_detail</span></code> como tabela no banco de dados, aumentando a performance em relação à visualização (<em>view</em>). No segundo caso, resolvemos que as tabelas staging não são necessárias em nosso DW mas apenas no processo de transformação e por isso definimos que todos os modelos na pasta models/staging não serão materializados (<em>ephemeral</em>). Quando os dois casos estiverem presentes para o mesmo modelo, a configuração dada no modelo leva prioridade sobre a presente no projeto. Em geral, <strong>devemos evitar configurar materializações nos modelos e utilizar as opções do dbt_project.</strong></p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span>{{config (materialized=&#39;table&#39;)}}
+
+with customers (
+		(...)
+    )
+
+(...)
+</pre></div>
+</div>
+<p><strong>Exemplo de configuração de materialização no modelo do dbt</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">models</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">northwind</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">staging</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">materialized</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ephemeral</span><span class="w"></span>
+<span class="w">      </span><span class="nt">marts</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">materialized</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">table</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>Exemplo de configuração de materialização no dbt_project.yaml</strong></p>
+<p>Em geral, tabelas são preferíveis para otimizar as consultas no BI pois possuem um desempenho melhor de leitura que uma visualização (view). Durante a etapa de desenvolvimento o uso de views geralmente é mais rápido na hora de executar o pipeline, principalmente se as tabelas forem muito grandes.</p>
+</section>
+<section id="escrevendo-testes">
+<h2>Escrevendo testes<a class="headerlink" href="#escrevendo-testes" title="Permalink to this headline">#</a></h2>
+<p>Garantir a integridade dos dados na transformação  é parte essencial de qualquer projeto de ETL e o dbt foi pensando com as melhores práticas de engenharia de software em mente, em especial a capacidade de escrever testes sobre os dados de forma direta e consistente.</p>
+<p>Quanto mais cedo incluirmos testes no processo de ETL, mais fácil será a validação dos modelos finais com o cliente. É por isso que recomendamos inverter o processo e escrever testes antes mesmo de escrever os modelos.</p>
+<p>Conceitualmente, há dois tipos de <a class="reference external" href="https://docs.getdbt.com/docs/building-a-dbt-project/tests">testes</a> no dbt:</p>
+<ul class="simple">
+<li><p><strong>testes genéricos (antigos testes de schema)</strong>: são definidos em um arquivo .yaml e permitem realizar testes gerais sobre colunas da tabela, tais como: unicidade, não-nulicidade, valores dentro de uma lista pré definida, relacionamentos, entre outros. O teste falha quando há algum registro que não passa em um teste específico . Ex. há um registro duplicado em uma coluna com teste de unicidade.</p></li>
+<li><p><strong>testes singulares (testes de dados)</strong>: são consultas sql que devem retornar 0 linhas para passarem no teste. Geralmente são testes baseados em dados validados com o cliente e de grande importância para garantir que os modelos estão gerando resultados consistentes.</p></li>
+</ul>
+<p>De forma geral, devemos incluir ao menos um testes genérico para cada modelo na sua chave primária (surrogate ou natural). Por exemplo, para garantir que não tenhamos nenhum cliente repetido na tabela de clientes, vamos criar um arquivo <code class="docutils literal notranslate"><span class="pre">dim_customers.yml</span></code> e incluir dois testes para a chave sk:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<span class="w"> </span>
+<span class="nt">models</span><span class="p">:</span><span class="w"></span>
+<span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dim_customers</span><span class="w"></span>
+<span class="w">   </span><span class="nt">columns</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">customer_sk</span><span class="w"></span>
+<span class="w">       </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The primary key of the customer</span><span class="w"></span>
+<span class="w">       </span><span class="nt">tests</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unique</span><span class="w"></span>
+<span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">not_null</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Para entender como os testes funcionam na prática, precisamos rodar o comando <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">run</span></code>  no terminal. Ao fazê-lo, o dbt converte os testes em consultas SQL apropriadas e retorna o resultado (sucesso ou falha) de forma similar a um modelo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ dbt test
+
+00:07:00  Running with dbt=1.3.0
+00:07:00  Found 2 models, 5 tests, 0 snapshots, 0 analyses, 319 macros, 0 operations, 14 seed files, 7 sources, 0 exposures, 0 metrics
+00:07:00  
+00:07:00  Concurrency: 1 threads (target=&#39;dev&#39;)
+00:07:00  
+00:07:00  1 of 5 START test accepted_values_dim_products_is_discontinued__No__Yes ........ [RUN]
+00:07:02  1 of 5 PASS accepted_values_dim_products_is_discontinued__No__Yes .............. [PASS in 1.86s]
+00:07:02  2 of 5 START test not_null_dim_products_product_sk ............................. [RUN]
+00:07:04  2 of 5 PASS not_null_dim_products_product_sk ................................... [PASS in 1.89s]
+00:07:04  3 of 5 START test source_not_null_northwind_orders_order_id .................... [RUN]
+00:07:06  3 of 5 PASS source_not_null_northwind_orders_order_id .......................... [PASS in 1.55s]
+00:07:06  4 of 5 START test source_unique_northwind_orders_order_id ...................... [RUN]
+00:07:07  4 of 5 PASS source_unique_northwind_orders_order_id ............................ [PASS in 1.78s]
+00:07:07  5 of 5 START test unique_dim_products_product_sk ............................... [RUN]
+00:07:09  5 of 5 PASS unique_dim_products_product_sk ..................................... [PASS in 1.97s]
+00:07:09  
+00:07:09  Finished running 5 tests in 0 hours 0 minutes and 9.67 seconds (9.67s).
+00:07:09  
+00:07:09  Completed successfully
+00:07:09  
+00:07:09  Done. PASS=5 WARN=0 ERROR=0 SKIP=0 TOTAL=5
+</pre></div>
+</div>
+<p>Vemos que nossa tabela dimensão clientes não possui nenhum registro repetido ou nulo na coluna customer_sk. Mas e se fizermos o mesmo teste para a coluna order_id na tabela de pedidos? o que esperamos encontrar? Lembremos que optamos por juntar na tabela fato a tabela de itens por pedido, de modo que podemos ter múltiplas linhas para cada pedido. Ao rodar um teste de unicidade para o id do pedido (order_id), esperamos que esse teste falhe e é exatamente isso que acontece. Vemos que o dbt encontrou 693 linhas repetidas quando esperávamos nenhuma:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ dbt <span class="nb">test</span>
+<span class="m">00</span>:21:52  Running with <span class="nv">dbt</span><span class="o">=</span><span class="m">1</span>.3.0
+<span class="m">00</span>:21:53  Found <span class="m">3</span> models, <span class="m">7</span> tests, <span class="m">0</span> snapshots, <span class="m">0</span> analyses, <span class="m">319</span> macros, <span class="m">0</span> operations, <span class="m">14</span> seed files, <span class="m">7</span> sources, <span class="m">0</span> exposures, <span class="m">0</span> metrics
+...
+
+<span class="m">00</span>:22:01  <span class="m">5</span> of <span class="m">7</span> FAIL <span class="m">693</span> source_unique_northwind_order_details_order_id ................. <span class="o">[</span>FAIL <span class="m">693</span> <span class="k">in</span> <span class="m">1</span>.58s<span class="o">]</span>
+<span class="m">00</span>:22:01  <span class="m">6</span> of <span class="m">7</span> START <span class="nb">test</span> source_unique_northwind_orders_order_id ...................... <span class="o">[</span>RUN<span class="o">]</span>
+<span class="m">00</span>:22:03  <span class="m">6</span> of <span class="m">7</span> PASS source_unique_northwind_orders_order_id ............................ <span class="o">[</span>PASS <span class="k">in</span> <span class="m">1</span>.32s<span class="o">]</span>
+<span class="m">00</span>:22:03  <span class="m">7</span> of <span class="m">7</span> START <span class="nb">test</span> unique_dim_products_product_sk ............................... <span class="o">[</span>RUN<span class="o">]</span>
+<span class="m">00</span>:22:05  <span class="m">7</span> of <span class="m">7</span> PASS unique_dim_products_product_sk ..................................... <span class="o">[</span>PASS <span class="k">in</span> <span class="m">2</span>.11s<span class="o">]</span>
+...
+<span class="m">00</span>:22:05  Completed with <span class="m">1</span> error and <span class="m">0</span> warnings:
+<span class="m">00</span>:22:05  
+<span class="m">00</span>:22:05  Failure <span class="k">in</span> <span class="nb">test</span> source_unique_northwind_order_details_order_id <span class="o">(</span>models/staging/sources.yml<span class="o">)</span>
+<span class="m">00</span>:22:05    Got <span class="m">693</span> results, configured to fail <span class="k">if</span> !<span class="o">=</span> <span class="m">0</span>
+<span class="m">00</span>:22:05  
+<span class="m">00</span>:22:05    compiled Code at target/compiled/northwind/models/staging/sources.yml/source_unique_northwind_order_details_order_id.sql
+<span class="m">00</span>:22:05  
+<span class="m">00</span>:22:05  Done. <span class="nv">PASS</span><span class="o">=</span><span class="m">6</span> <span class="nv">WARN</span><span class="o">=</span><span class="m">0</span> <span class="nv">ERROR</span><span class="o">=</span><span class="m">1</span> <span class="nv">SKIP</span><span class="o">=</span><span class="m">0</span> <span class="nv">TOTAL</span><span class="o">=</span><span class="m">7</span>
+</pre></div>
+</div>
+<p>É comum que durante o processo de modelagem aconteçam transformações que porventura dupliquem registros que deveriam ser únicos (um join equivocado por exemplo) ou que possivelmente existam regras de negócio que não sabíamos de antemão. Para esses casos, escrever testes de forma consistente facilita muito o trabalho de validação e desenvolvimento dos modelos com segurança. Além de unicidade e não-nulidade, outros testes de schemas comuns a serem incluídos nos modelos são:</p>
+<ul class="simple">
+<li><p><strong>Teste de relacionamento (relationship)</strong>: os testes de relacionamento servem para garantir relacionamentos entre colunas de modelos distintos, similar ao comportamento de chaves estrangeiras no banco transacional. Geralmente é utilizado para mapear chaves de dimensões dentro das tabelas fato.</p></li>
+</ul>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<span class="w"> </span>
+<span class="nt">models</span><span class="p">:</span><span class="w"></span>
+<span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fct_order_detail</span><span class="w"></span>
+<span class="w">   </span><span class="nt">columns</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">employee_fk</span><span class="w"></span>
+<span class="w">       </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The foreign key to the employees dimension table</span><span class="w"></span>
+<span class="w">       </span><span class="nt">tests</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">relationships</span><span class="p">:</span><span class="w"></span>
+<span class="w">               </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ref(&#39;dim_customers&#39;)</span><span class="w"></span>
+<span class="w">               </span><span class="nt">field</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;customer_sk&#39;</span><span class="w"></span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Teste de valores aceitos (accepted_values)</strong>: esse tipo de teste serve para garantir que os valores de uma coluna estejam em um intervalo pré-definido. Por exemplo, em uma coluna de status de pedido.</p></li>
+</ul>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<span class="w"> </span>
+<span class="nt">models</span><span class="p">:</span><span class="w"></span>
+<span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dim_products</span><span class="w"></span>
+<span class="w">   </span><span class="nt">columns</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">is_discontinued</span><span class="w"></span>
+<span class="w">       </span><span class="nt">tests</span><span class="p">:</span><span class="w"></span>
+<span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">accepted_values</span><span class="p">:</span><span class="w"></span>
+<span class="w">               </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;No&#39;</span><span class="p p-Indicator">,</span><span class="s">&#39;Yes&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Na maioria dos casos, a grande dificuldade no processo de modelagem de dados é garantir que indicadores e resultados sejam os mesmos (ou próximos) dos considerados ‘verdadeiros’ pelo cliente.  Não raramente o próprio cliente não tem uma visão clara dos passos necessários, fontes de dados e regras de negócios que são aplicadas antes da geração de um indicador em um relatório ou planilha de Excel e é o trabalho do analytics engineer trabalhar de forma integrada com o cliente para extrair essas informações e aplicar no processo de modelagem. Para facilitar esse trabalho podemos utilizar os testes de dados. isto é, consultas SQL arbitrárias em cima dos modelos que garantem que nossos modelos cheguem no resultado desejado. Para evitar outros problemas como dados mutáveis, atraso no ETL etc, o ideal é sempre fixarmos um período retroativo onde temos confiança que os dados não irão se alterar.</p>
+<p>Como exemplo, queremos validar a quantidade de itens em pedidos da nossa tabela de fatos de pedidos (<code class="docutils literal notranslate"><span class="pre">fct_order_detail</span></code>). Para isso, vamos fazer uma consulta nos dados originais e fixar os pedidos criados em março de 1998 como período de validação. Podemos gerar a consulta diretamente em SQL e logo obtemos uma quantidade de 4065 unidades vendidas.</p>
+<p>Após hipoteticamente confirmarmos com a Northwind que esse número é consistente, podemos utilizar como validação em nosso teste de dados <code class="docutils literal notranslate"><span class="pre">sum_quantity_march_1998.sql</span></code>. Notamos que a sintaxe do teste é muito próxima de um modelo mas que devemos escrever nossa consulta final como se quiséssemos que ele “desse errado”, isto é, queremos retornar todas as linhas onde o teste não passa ao rodar o dbt test,  e o sucesso no teste ocorre quando o resultado da consulta é vazio.</p>
+<div class="highlight-SQL notranslate"><div class="highlight"><pre><span></span>* If sum of quantity in March-1998 is not 4065, throws an error */
+ 
+with
+   sum_quantity as (
+       SELECT
+           sum(quantity) as cnt
+       FROM {{ ref (&#39;fct_order_detail&#39;) }}
+       where order_date
+       between &#39;1998-03-01&#39; and &#39;1998-03-31&#39;
+   )
+ 
+select * from sum_quantity where cnt != 4065
+</pre></div>
+</div>
+<p>Ao combinarmos o uso de testes genéricos e singulares desde o início do projeto, garantimos a consistência e integridade do ETL mesmo em projetos com centenas de modelos.</p>
+</section>
+<section id="documentando-o-modelo-de-dados-e-visualizando-as-dependencias">
+<h2>Documentando o modelo de dados e visualizando as dependências<a class="headerlink" href="#documentando-o-modelo-de-dados-e-visualizando-as-dependencias" title="Permalink to this headline">#</a></h2>
+<p>A última etapa dentro de um projeto padrão de dbt é a documentação dos modelos e transformações. Essa documentação é feita a partir dos arquivos <code class="docutils literal notranslate"><span class="pre">schema.yml</span></code> que já utilizamos para escrever nossos testes de schema através de campos de descrição de tabelas e colunas. Ao criarmos as descrições, elas são adicionadas com outras informações que o dbt processa de como as fontes, modelos e testes do projeto estão estruturados. No exemplo abaixo documentamos a tabela dimensão Produtos e cada uma de suas colunas, de preferência na mesma ordem que no modelo final:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+
+<span class="nt">models</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dim_products</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Esta é a tabela dimensão produto da northwind. Ela contém informações sobre os produtos da empresa.</span><span class="w"></span>
+<span class="w">    </span><span class="nt">columns</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">product_sk</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A chave surrogate da dimensão. Deve ser única.</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tests</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unique</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">not_null</span><span class="w"></span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">product_id</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A chave natural do produto.</span><span class="w"></span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">product_name</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Nome do produto</span><span class="w"></span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">units_in_stock</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Total de unidades em estoque de um determinado produto.</span><span class="w"></span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">category_id</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A chave natural da categoria do produto.</span><span class="w"></span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unit_price</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">O preço unitário do produto (mais recente)</span><span class="w"></span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reorder_level</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ponte de re-estocage do produto</span><span class="w"></span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">supplier_id</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A chave natural do forncedor</span><span class="w"></span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">units_on_order</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Quantidade mínima por pedido</span><span class="w"></span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">is_discontinued</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Binário. Se o produto foi descontinuado.</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tests</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">accepted_values</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;No&#39;</span><span class="p p-Indicator">,</span><span class="s">&#39;Yes&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Embora já seja importante para o entendimento dos modelos junto ao código, é quando utilizamos o comando <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">docs</span></code>  que vemos o diferencial de utilizar o dbt nesse quesito. O comando <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">docs</span> <span class="pre">generate</span></code> gera um arquivo de documentação em formato html que conseguimos visualizar de forma interativa no navegador mesmo em projetos complexos, facilitando a colaboração e  compartilhamento da modelagem. A visualização é feita através do <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">docs</span> <span class="pre">serve</span></code> no terminal:</p>
+<figure class="align-default" id="dbt-docs">
+<img alt="../../../_images/dbt_docs.png" src="../../../_images/dbt_docs.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 57 </span><span class="caption-text">Exemplo de documentação do dbt</span><a class="headerlink" href="#dbt-docs" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Além das descrições, o dbt gera uma árvore de dependências dos modelos que facilita o entendimento do ETL:</p>
+<figure class="align-default" id="dbt-lineage">
+<img alt="../../../_images/dbt_lineage.png" src="../../../_images/dbt_lineage.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 58 </span><span class="caption-text">Exemplo de Linhagem de dados no dbt</span><a class="headerlink" href="#dbt-lineage" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="orquestracao">
+<h2>Orquestração<a class="headerlink" href="#orquestracao" title="Permalink to this headline">#</a></h2>
+<p>A documentação conclui as etapas básicas que devem constar de qualquer projeto de transformação de dados em dbt. Vale ressaltar que projetos de ETL raramente são lineares: geralmente passamos por diversas iterações de cada etapa do projeto, desde mapeamento de novas fontes, criação dos modelos, testes e documentação. Depois de validados, ainda precisamos apontar os modelos para um banco de dados em produção que será de fato consultado por uma ferramenta de BI ou outro uso pelo cliente, além de garantir que esse processo todo rode na frequência e horário adequado para os fins do projeto, processo também chamado de <strong>Orquestração</strong>.</p>
+<p>O dbt <em>open-source</em> (também chamado de dbt core) não possui um orquestrador nativo, de modo que a orquestração do projeto precisa ser feita por uma ferramenta externa como o Airflow ou Prefect.  Uma outra alternativa é utilizar o serviço do <em>dbt cloud</em>, uma solução SaaS dos criadores do dbt que facilita o deploy de projetos em dbt e que possui um orquestrador incorporado.</p>
+</section>
+<section id="conclusao">
+<h2>Conclusão<a class="headerlink" href="#conclusao" title="Permalink to this headline">#</a></h2>
+<p>Chegamos ao fim de nosso exemplo prático de transformação de dados com dbt e também de nossa <strong>Parte 3: Transformando dados com ELT</strong>. Espero que esse conteúdo seja útil para sua jornada de Engenharia de Analytics com o ELT e com o <em>Modern Data Stack</em>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters/15/03"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../02/arquiteturas_transformacao.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">15.2 Alternativas de Arquitetura de ETL/ELT</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Daniel Paulon Avancini<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
