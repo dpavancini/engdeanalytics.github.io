@@ -405,10 +405,32 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../07/intro.html">
    Capítulo 7 -  O Modern Data Stack
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../07/01/principios.html">
+     7.1 Construindo o Modern Data Stack
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../07/02/arq_referencia.html">
+     7.2 Arquitetura de Referência
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../07/leia_mais.html">
+     7.3 Leia Mais
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
@@ -421,8 +443,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="../../08/intro.html">
    Capítulo 8 - Data Warehouses
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-  <label for="toctree-checkbox-7">
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -453,8 +475,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="../../09/intro.html">
    Capítulo 9 - Fatos
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-  <label for="toctree-checkbox-8">
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -480,8 +502,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="../../10/intro.html">
    Capítulo 10 - Dimensões
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
-  <label for="toctree-checkbox-9">
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -517,8 +539,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="../../11/intro.html">
    Capítulo 11 -  Modelando um Data Warehouse
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
-  <label for="toctree-checkbox-10">
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -581,8 +603,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="../../13/intro.html">
    Capítulo 13 -  Introdução ao ELT
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
-  <label for="toctree-checkbox-11">
+  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -608,8 +630,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="../../14/intro.html">
    Capítulo 14 -  Ingestão de dados
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
-  <label for="toctree-checkbox-12">
+  <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+  <label for="toctree-checkbox-13">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -635,8 +657,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="../intro.html">
    Capítulo 15 -  Transformação de dados
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
-  <label for="toctree-checkbox-13">
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+  <label for="toctree-checkbox-14">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -903,6 +925,10 @@ title="Print to PDF"
 <li><p>Data Warehouse/Data Lakehouse: a transformação dentro do próprio <em>data warehouse</em> é a chave do chamado modelo ELT. As vantagens dessa abordagem são a facilidade de utilizar uma linguagem padrão (SQL) e utilizar ferramentas específicas como dbt para cuidar das atividades auxiliares. Isso permite uma redução do tempo de entrega dos pipelines e uma necessidade técnica menor. Por outro lado, é limitado em dados estruturados (que podem ser armazenados em um banco de dados) e não é adequado para pipelines muito complexos.</p></li>
 </ul>
 <p>No <a class="reference internal" href="../../07/intro.html#mds"><span class="std std-ref">MDS</span></a>, vamos utilizar o próprio <em>Data Warehouse</em> como ambiente de transformação e utilizar ferramentas como o dbt para modelar os dados seguindo as melhores práticas de desenvolvimento. Essa decisão evita a necessidade dos Engenheiros de Analytics dominarem muitas linguagens de programação e frameworks de desenvolvimento distintos e foquem apenas na construção do data warehouse utilizando apenas o necessário para o framework do ELT. No equilíbrio entre desenvolvimento e conhecimento de negócio, nosso foco é o negócio.</p>
+<div class="admonition-veja-mais admonition">
+<p class="admonition-title">Veja mais:</p>
+<p>No vídeo abaixo são apresentados dois casos comuns de arquitetura de dados usando ETL tradicional e Moderno:<br><iframe width="560" height="315" src="https://www.youtube.com/embed/XLxoB83Tcd8?start=3516&end=4980" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+</div>
 <section id="etl-baseado-em-ferramentas-visuais">
 <h2>ETL baseado em ferramentas visuais<a class="headerlink" href="#etl-baseado-em-ferramentas-visuais" title="Permalink to this headline">#</a></h2>
 <p>O diagrama abaixo apresenta uma arquitetura comum em projetos de dados liderados pela área de BI. Nestes projetos as três etapas do ETL são geralmente realizadas dentro de uma ferramenta monolítica como Pentaho ou Informática.</p>
@@ -938,10 +964,10 @@ title="Print to PDF"
 <section id="abordagem-moderna">
 <h2>Abordagem Moderna<a class="headerlink" href="#abordagem-moderna" title="Permalink to this headline">#</a></h2>
 <p>Na abordagem moderna as etapas de processamento de dados ficam dentro do Data Warehouse, de modo que o processo é invertido para <strong>Extract-Load-Transform</strong> (ELT). A principal é diferença em relação à abordagem tradicional é a criação de uma nova função, do <a class="reference external" href="https://blog.indicium.tech/analytics-engineer-conheca-6-responsabilidades-dessa-nova-funcao/">Engenheiro de Analytics</a>, responsável por transformar os dados dentro do Data Warehouse. Essa função resolve o distanciamento entre dados e negócio comum nos processos de ETL tradicionais.</p>
-<figure class="align-default" id="elt">
+<figure class="align-default" id="elt-diagrama">
 <img alt="../../../_images/elt.png" src="../../../_images/elt.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 53 </span><span class="caption-text">ELT moderno.</span><a class="headerlink" href="#elt" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 53 </span><span class="caption-text">ELT moderno.</span><a class="headerlink" href="#elt-diagrama" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
